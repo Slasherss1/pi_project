@@ -17,7 +17,12 @@ endif()
 
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-add_executable(main src/main.cpp)
+file(GLOB SOURCES
+    "src/*.cpp"
+    "src/*.h"
+)
+
+add_executable(main ${SOURCES})
 
 target_link_libraries(main 
     raylib
