@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 4.2)
 
-project(pi_project)
+project(
+    pi_project
+    VERSION 1.0
+    LANGUAGES CXX
+)
 
 find_package(raylib 5.5 QUIET)
 
