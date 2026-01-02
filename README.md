@@ -1,21 +1,10 @@
 # pi_project
 
 ## Build
-- Windows:
-    ```
-    mkdir build
-    cd build
+```
+cmake -B build
 
-    cmake ..
+cd build
 
-    cmake --build . 
-    ```
-- Linux:
-    ```
-    mkdir build
-    cd build
-
-    cmake ..
-
-    make
-    ```
+cmake --build .
+```
