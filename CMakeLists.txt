@@ -28,4 +28,6 @@ target_link_libraries(main
     raylib
 )
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 target_include_directories(main PUBLIC "${raylib_SOURCE_DIR}/src")
