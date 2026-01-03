@@ -43,11 +43,3 @@
 # Build directory
 build
 .cache
-
-# IDE folders
-.vscode/
-.idea/
-.vs/
-
-# VS files
-CMakeSettings.json
