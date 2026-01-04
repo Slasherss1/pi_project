@@ -43,3 +43,10 @@
 # Build directory
 build
 .cache
+
+# IDE folders
+.vs/
+.idea/
+
+# VS files
+CMakeSettings.json
