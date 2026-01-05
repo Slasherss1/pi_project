@@ -35,3 +35,5 @@ target_link_libraries(main
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_include_directories(main PUBLIC "${raylib_SOURCE_DIR}/src")
+
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
