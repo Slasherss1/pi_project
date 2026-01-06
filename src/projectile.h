@@ -1,5 +1,6 @@
-#include <raylib.h>
-class Projectile {
-    private:
+#include "physObj.h"
+
+class Projectile : public PhysicsObj {
     public:
+        void Draw() override;
 };
