@@ -7,8 +7,10 @@ class PhysicsObj {
         Vector2 velocity = {0.0f, 0.0f};
         float mass = 0.0;
         Vector2 forceDir = {0.0f, 0.0f};
-        float force = 0.0;
         float crossSection = 0.0f;
+
+        float coliderRadius = 0.0f;
+
         virtual ~PhysicsObj();
         Texture2D texture;
         void Tick();

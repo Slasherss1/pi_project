@@ -2,5 +2,5 @@
 #include <raylib.h>
 
 void Projectile::Draw() {
-    DrawTexture(this->texture, this->position.x, this->position.y, WHITE);
+    DrawTexture(this->texture, this->position.x-32, this->position.y-32, WHITE);
 }

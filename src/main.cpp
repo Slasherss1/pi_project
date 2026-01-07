@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "target.h"
 #include "projectile.h"
+#include "raymath.h"
 
 using namespace std;
 int main() {
@@ -12,26 +13,41 @@ int main() {
     target.texture = LoadTexture("assets/cel.png");
     target.position = {400.0, 300.0};
     target.mass = 0.05; // gram
+    target.coliderRadius = 25.0f; // pixels
+    target.crossSection = 0.01; // m^2
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
-    projectile.forceDir = {1.0, 0.0};
-    projectile.force = 100.0; // Newton
+    projectile.forceDir = {50.0, 35.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
+    projectile.coliderRadius = 10.0f; // pixels
 
     SetTraceLogLevel(LOG_DEBUG);
 
     while (!WindowShouldClose()) {
-        target.Tick();
         projectile.Tick();
+        if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
+            projectile.velocity = Vector2Zero();
+            target.forceDir = projectile.forceDir;
+            projectile.forceDir = Vector2Zero();
+            // target.forceDir = { (projectile.position.x - target.position.x) * -1, (projectile.position.y - target.position.y) * -1 };
+            // target.forceDir = Vector2Scale(target.forceDir, 0.8);
+            // projectile.forceDir = Vector2Scale(projectile.forceDir, 0.2);
+            DrawText("Collision Detected!", 300, 50, 20, RED);
+        }
+        target.Tick();
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawText("Hello, Raylib!", 190, 200,20, LIGHTGRAY);
 
+        DrawCircleV(target.position, target.coliderRadius, GOLD);
+        DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
+
         target.Draw();
         projectile.Draw();
+
 
         EndDrawing();
     }
