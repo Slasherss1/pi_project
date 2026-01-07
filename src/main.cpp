@@ -28,12 +28,11 @@ int main() {
     while (!WindowShouldClose()) {
         projectile.Tick();
         if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
+            target.velocity = projectile.velocity;
             projectile.velocity = Vector2Zero();
             target.forceDir = projectile.forceDir;
             projectile.forceDir = Vector2Zero();
-            // target.forceDir = { (projectile.position.x - target.position.x) * -1, (projectile.position.y - target.position.y) * -1 };
-            // target.forceDir = Vector2Scale(target.forceDir, 0.8);
-            // projectile.forceDir = Vector2Scale(projectile.forceDir, 0.2);
+
             DrawText("Collision Detected!", 300, 50, 20, RED);
         }
         target.Tick();
