@@ -13,15 +13,20 @@ int main() {
     target.texture = LoadTexture("assets/cel.png");
     target.position = {400.0, 300.0};
     target.mass = 0.05; // gram
-    target.coliderRadius = 25.0f; // pixels
+    target.coliderRadius = 23.0f; // pixels
     target.crossSection = 0.01; // m^2
+
+    SafeZone sz;
+    sz.position = {400.0, 300.0};
+    sz.radius = 50.0f;
+    target.safeZone = sz;
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
     projectile.forceDir = {50.0, 35.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
-    projectile.coliderRadius = 10.0f; // pixels
+    projectile.coliderRadius = 20.0f; // pixels
 
     SetTraceLogLevel(LOG_DEBUG);
 
@@ -35,12 +40,21 @@ int main() {
 
             DrawText("Collision Detected!", 300, 50, 20, RED);
         }
+
+        const float forceDecayPerSecond = 15.0f;
+        float fLen = Vector2Length(target.forceDir);
+        if (fLen > 0.0f) {
+            float newLen = fLen - forceDecayPerSecond * GetFrameTime();
+            if (newLen <= 0.0f) target.forceDir = Vector2Zero();
+            else target.forceDir = Vector2Scale(Vector2Normalize(target.forceDir), newLen);
+        }
         target.Tick();
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawText("Hello, Raylib!", 190, 200,20, LIGHTGRAY);
 
+        DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
         DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
 
