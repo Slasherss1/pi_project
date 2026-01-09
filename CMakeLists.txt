@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(pi_project)
+project(
+    pi_project
+    VERSION 1.0
+    LANGUAGES CXX
+)
 
 find_package(raylib 5.5 QUIET)
 
@@ -31,3 +35,5 @@ target_link_libraries(main
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_include_directories(main PUBLIC "${raylib_SOURCE_DIR}/src")
+
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
