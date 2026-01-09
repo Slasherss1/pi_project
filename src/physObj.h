@@ -11,6 +11,8 @@ class PhysicsObj {
 
         float coliderRadius = 0.0f;
 
+        float decay = 0.0f;
+
         virtual ~PhysicsObj();
         Texture2D texture;
         void Tick();

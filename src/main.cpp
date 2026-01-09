@@ -10,16 +10,18 @@ int main() {
     Target target({400.0, 300.0});
     target.texture = LoadTexture("assets/cel.png");
     target.mass = 0.05; // gram
-    target.coliderRadius = 23.0f; // pixels
+    target.coliderRadius = 23.0; // pixels
     target.crossSection = 0.01; // m^2
-    target.safeZone.radius = 50.0f;
+    target.safeZone.radius = 50.0;
+    target.decay = 15.0;
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
-    projectile.forceDir = {50.0, 35.0};
+    projectile.forceDir = {50.0, 37.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
-    projectile.coliderRadius = 20.0f; // pixels
+    projectile.coliderRadius = 20.0; // pixels
+    projectile.decay = 5.0;
 
     #ifndef NDEBUG
     SetTraceLogLevel(LOG_DEBUG);
@@ -38,13 +40,6 @@ int main() {
             #endif
         }
 
-        const float forceDecayPerSecond = 15.0f;
-        float fLen = Vector2Length(target.forceDir);
-        if (fLen > 0.0f) {
-            float newLen = fLen - forceDecayPerSecond * GetFrameTime();
-            if (newLen <= 0.0f) target.forceDir = Vector2Zero();
-            else target.forceDir = Vector2Scale(Vector2Normalize(target.forceDir), newLen);
-        }
         target.Tick();
 
         BeginDrawing();
