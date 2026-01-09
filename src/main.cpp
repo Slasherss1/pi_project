@@ -49,6 +49,8 @@ int main() {
         DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
         DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
+        DrawLineEx(projectile.position, Vector2Add(projectile.position, projectile.forceDir), 3, BLACK);
+        DrawLineEx(target.position, Vector2Add(target.position, target.forceDir), 3, BLACK);
         #endif
 
         target.Draw();
