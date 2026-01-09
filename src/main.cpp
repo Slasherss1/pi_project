@@ -21,7 +21,7 @@ int main() {
     projectile.crossSection = 0.01; // m^2
     projectile.coliderRadius = 20.0f; // pixels
 
-    #ifdef DEBUG
+    #ifndef NDEBUG
     SetTraceLogLevel(LOG_DEBUG);
     #endif
 
@@ -33,7 +33,7 @@ int main() {
             target.forceDir = projectile.forceDir;
             projectile.forceDir = Vector2Zero();
 
-            #ifdef DEBUG
+            #ifndef NDEBUG
             DrawText("Collision Detected!", 300, 50, 20, RED);
             #endif
         }
@@ -50,7 +50,7 @@ int main() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        #ifdef DEBUG
+        #ifndef NDEBUG
         DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
         DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
