@@ -9,17 +9,12 @@ int main() {
     cout << "Hello, World!" << endl;
     InitWindow(800, 600, "Hello Raylib");
     
-    Target target;
+    Target target({400.0, 300.0});
     target.texture = LoadTexture("assets/cel.png");
-    target.position = {400.0, 300.0};
     target.mass = 0.05; // gram
     target.coliderRadius = 23.0f; // pixels
     target.crossSection = 0.01; // m^2
-
-    SafeZone sz;
-    sz.position = {400.0, 300.0};
-    sz.radius = 50.0f;
-    target.safeZone = sz;
+    target.safeZone.radius = 50.0f;
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
