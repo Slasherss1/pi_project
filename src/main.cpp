@@ -1,4 +1,3 @@
-#include <iostream>
 #include <raylib.h>
 #include "target.h"
 #include "projectile.h"
@@ -6,8 +5,7 @@
 
 using namespace std;
 int main() {
-    cout << "Hello, World!" << endl;
-    InitWindow(800, 600, "Hello Raylib");
+    InitWindow(800, 600, "Flanki");
     
     Target target({400.0, 300.0});
     target.texture = LoadTexture("assets/cel.png");
@@ -23,7 +21,9 @@ int main() {
     projectile.crossSection = 0.01; // m^2
     projectile.coliderRadius = 20.0f; // pixels
 
+    #ifdef DEBUG
     SetTraceLogLevel(LOG_DEBUG);
+    #endif
 
     while (!WindowShouldClose()) {
         projectile.Tick();
@@ -33,7 +33,9 @@ int main() {
             target.forceDir = projectile.forceDir;
             projectile.forceDir = Vector2Zero();
 
+            #ifdef DEBUG
             DrawText("Collision Detected!", 300, 50, 20, RED);
+            #endif
         }
 
         const float forceDecayPerSecond = 15.0f;
@@ -47,15 +49,15 @@ int main() {
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("Hello, Raylib!", 190, 200,20, LIGHTGRAY);
 
+        #ifdef DEBUG
         DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
         DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
+        #endif
 
         target.Draw();
         projectile.Draw();
-
 
         EndDrawing();
     }
