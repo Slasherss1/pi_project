@@ -17,11 +17,11 @@ int main() {
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
-    projectile.forceDir = {50.0, 37.0};
+    projectile.forceDir = {50.0, 39.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
     projectile.coliderRadius = 20.0; // pixels
-    projectile.decay = 5.0;
+    // projectile.decay = 0.0;
 
     #ifndef NDEBUG
     SetTraceLogLevel(LOG_DEBUG);
@@ -30,21 +30,27 @@ int main() {
     while (!WindowShouldClose()) {
         projectile.Tick();
         if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
-            target.velocity = projectile.velocity;
-            projectile.velocity = Vector2Zero();
-            target.forceDir = projectile.forceDir;
-            projectile.forceDir = Vector2Zero();
+            const Vector2 angleDir = Vector2Subtract(projectile.position, target.position);
+            const Vector2 impact = Vector2Add(projectile.forceDir, target.forceDir);
+            const Vector2 totalVelocity = Vector2Add(projectile.velocity, target.velocity);
+            const float totalMass = projectile.mass + target.mass;
+            const float angle = Vector2Angle(angleDir, projectile.forceDir);
+            const float nangle = angle - PI;
+            target.velocity = Vector2Rotate(Vector2Scale(totalVelocity, projectile.mass / totalMass), angle);
+            projectile.velocity = Vector2Rotate(Vector2Scale(totalVelocity, target.mass / totalMass), nangle);
+            target.forceDir = Vector2Rotate(Vector2Scale(impact, projectile.mass / totalMass), angle);
+            projectile.forceDir = Vector2Rotate(Vector2Scale(impact, target.mass / totalMass), nangle);
 
             #ifndef NDEBUG
             DrawText("Collision Detected!", 300, 50, 20, RED);
             #endif
         }
-
+        
         target.Tick();
-
+        
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
+        
         #ifndef NDEBUG
         DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
