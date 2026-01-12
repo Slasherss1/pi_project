@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(pi_project)
+project(
+    pi_project
+    VERSION 1.0
+    LANGUAGES CXX
+)
 
 find_package(raylib 5.5 QUIET)
 
@@ -17,17 +21,39 @@ endif()
 
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-file(GLOB SOURCES
-    "src/*.cpp"
-    "src/*.h"
+link_libraries(raylib)
+
+include_directories(
+    PUBLIC
+        "${raylib_SOURCE_DIR}/src"
 )
 
-add_executable(main ${SOURCES})
+add_executable(main)
 
-target_link_libraries(main 
-    raylib
+target_sources(main
+    PRIVATE
+        "src/main.cpp"
+        "src/physObj.cpp"
+        "src/physObj.h"
+        "src/projectile.cpp"
+        "src/projectile.h"
+        "src/target.cpp"
+        "src/target.h"
+)
+
+add_executable(PhysicsTest)
+
+target_sources(PhysicsTest
+    PRIVATE
+        "src/physicsTest.cpp"
+        "src/physObj.cpp"
+        "src/physObj.h"
+        "src/projectile.cpp"
+        "src/projectile.h"
+        "src/target.cpp"
+        "src/target.h"
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-target_include_directories(main PUBLIC "${raylib_SOURCE_DIR}/src")
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
