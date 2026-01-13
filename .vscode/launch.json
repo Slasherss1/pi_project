@@ -7,10 +7,20 @@
         {
             "type": "gdb",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch main",
             "target": "./build/main",
             "cwd": "${workspaceRoot}",
-            "valuesFormatting": "parseText"
-        }
+            "valuesFormatting": "prettyPrinters",
+            "preLaunchTask": "Build project"
+        },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "Launch Physics Test",
+            "target": "./build/PhysicsTest",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "prettyPrinters",
+            "preLaunchTask": "Build project"
+        },
     ]
 }
