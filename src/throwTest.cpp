@@ -34,7 +34,7 @@ void ColisionHandler(PhysicsObj& target, PhysicsObj& projectile) {
 int main() {
     InitWindow(800, 600, "Flanki");
     
-    Target target({400.0, 300.0});
+    Target target({400.0, 150.0});
     target.texture = LoadTexture("assets/cel.png");
     target.mass = 0.05; // gram
     target.coliderRadius = 23.0; // pixels
@@ -42,43 +42,50 @@ int main() {
     target.safeZone.radius = 40.0;
     target.decay = 15.0;
 
-    Projectile projectile;
-    projectile.position = {100.0, 100.0};
-    projectile.texture = LoadTexture("assets/zgniot.png");
-    projectile.forceDir = {50.0, 35.0};
-    projectile.mass = 0.05; // kg
-    projectile.crossSection = 0.01; // m^2
-    projectile.coliderRadius = 20.0; // pixels
-    projectile.decay = 3.0;
+    Projectile* projectilePtr = nullptr;
+
+    AimableProjectile proj;
+    proj.position = {400.0, 400.0};
+    proj.texture = LoadTexture("assets/zgniot.png");
+    proj.proj_pp = &projectilePtr;
 
     #ifndef NDEBUG
     SetTraceLogLevel(LOG_DEBUG);
     #endif
 
     while (!WindowShouldClose()) {
-        projectile.Tick();
-        ColisionHandler(target, projectile);
+        if (projectilePtr != nullptr) {
+            projectilePtr->Tick();
+            ColisionHandler(target, *projectilePtr);
+        }
+        proj.Tick();
         target.Tick();
-        
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
         #ifndef NDEBUG
         DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
         DrawCircleV(target.position, target.coliderRadius, GOLD);
-        DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
-        DrawLineEx(projectile.position, Vector2Add(projectile.position, projectile.forceDir), 3, BLACK);
+        if (projectilePtr != nullptr) {
+            DrawCircleV(projectilePtr->position, projectilePtr->coliderRadius, BLUE);
+            DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->forceDir), 3, RED);
+            DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->velocity), 3, GREEN);
+        }
         DrawLineEx(target.position, Vector2Add(target.position, target.forceDir), 3, BLACK);
         #endif
 
         target.Draw();
-        projectile.Draw();
+        proj.Draw();
+        if (projectilePtr != nullptr) {
+            projectilePtr->Draw();
+        }
 
         EndDrawing();
     }
 
     UnloadTexture(target.texture);
-    UnloadTexture(projectile.texture);
+    UnloadTexture(proj.texture);
 
     CloseWindow();
     return 0;
