@@ -39,6 +39,10 @@ target_sources(main
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
+        "src/game.h"
+        "src/game.cpp"
+        "src/utils.h"
+        "src/utils.cpp"
 )
 
 add_executable(PhysicsTest)
