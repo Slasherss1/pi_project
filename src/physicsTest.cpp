@@ -6,9 +6,9 @@
 
 using namespace std;
 
-void ColisionHandler(bool coliding, PhysicsObj& target, PhysicsObj& projectile) {
+void ColisionHandler(PhysicsObj& target, PhysicsObj& projectile) {
     static bool isColliding = false;
-    if (coliding) {
+    if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
         if (isColliding) return;
         isColliding = true;
     } else {
@@ -56,12 +56,7 @@ int main() {
 
     while (!WindowShouldClose()) {
         projectile.Tick();
-        if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
-            ColisionHandler(true, target, projectile);       
-        } else {
-            ColisionHandler(false, target, projectile);
-        }
-        
+        ColisionHandler(target, projectile);
         target.Tick();
         
         BeginDrawing();
