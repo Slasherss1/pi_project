@@ -30,7 +30,7 @@ int main() {
     while (!WindowShouldClose()) {
         projectile.Tick();
         if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
-            const Vector2 angleDir = Vector2Subtract(projectile.position, target.position);
+            const Vector2 angleDir = Vector2Negate(Vector2Subtract(projectile.position, target.position));
             const Vector2 impact = Vector2Add(projectile.forceDir, target.forceDir);
             const Vector2 totalVelocity = Vector2Add(projectile.velocity, target.velocity);
             const float totalMass = projectile.mass + target.mass;
