@@ -1,11 +1,12 @@
 #include <raylib.h>
+#include "physObj.h"
 #include "target.h"
 #include "projectile.h"
 #include "raymath.h"
 
 using namespace std;
 
-void ColisionHandler(bool coliding, Target& target, Projectile& projectile) {
+void ColisionHandler(bool coliding, PhysicsObj& target, PhysicsObj& projectile) {
     static bool isColliding = false;
     if (coliding) {
         if (isColliding) return;
