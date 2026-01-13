@@ -1,9 +1,36 @@
 #include <raylib.h>
+#include "physObj.h"
 #include "target.h"
 #include "projectile.h"
 #include "raymath.h"
 
 using namespace std;
+
+void ColisionHandler(PhysicsObj& target, PhysicsObj& projectile) {
+    static bool isColliding = false;
+    if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
+        if (isColliding) return;
+        isColliding = true;
+    } else {
+        isColliding = false;
+        return;
+    }
+    const Vector2 angleDir = Vector2Negate(Vector2Subtract(projectile.position, target.position));
+    const Vector2 impact = Vector2Add(projectile.forceDir, target.forceDir);
+    const Vector2 totalVelocity = Vector2Add(projectile.velocity, target.velocity);
+    const float totalMass = projectile.mass + target.mass;
+    const float angle = Vector2Angle(angleDir, projectile.forceDir);
+    const float nangle = angle - PI;
+    target.velocity = Vector2Rotate(Vector2Scale(totalVelocity, projectile.mass / totalMass), angle);
+    projectile.velocity = Vector2Rotate(Vector2Scale(totalVelocity, target.mass / totalMass), nangle);
+    target.forceDir = Vector2Rotate(Vector2Scale(impact, projectile.mass / totalMass), angle);
+    projectile.forceDir = Vector2Rotate(Vector2Scale(impact, target.mass / totalMass), nangle);
+
+    #ifndef NDEBUG
+    DrawText("Collision Detected!", 300, 50, 20, RED);
+    #endif
+}
+
 int main() {
     InitWindow(800, 600, "Flanki");
     
@@ -12,16 +39,16 @@ int main() {
     target.mass = 0.05; // gram
     target.coliderRadius = 23.0; // pixels
     target.crossSection = 0.01; // m^2
-    target.safeZone.radius = 50.0;
+    target.safeZone.radius = 40.0;
     target.decay = 15.0;
 
     Projectile projectile;
     projectile.texture = LoadTexture("assets/zgniot.png");
-    projectile.forceDir = {50.0, 39.0};
+    projectile.forceDir = {50.0, 35.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
     projectile.coliderRadius = 20.0; // pixels
-    // projectile.decay = 0.0;
+    projectile.decay = 3.0;
 
     #ifndef NDEBUG
     SetTraceLogLevel(LOG_DEBUG);
@@ -29,23 +56,7 @@ int main() {
 
     while (!WindowShouldClose()) {
         projectile.Tick();
-        if (CheckCollisionCircles(target.position, target.coliderRadius, projectile.position, projectile.coliderRadius)) {
-            const Vector2 angleDir = Vector2Subtract(projectile.position, target.position);
-            const Vector2 impact = Vector2Add(projectile.forceDir, target.forceDir);
-            const Vector2 totalVelocity = Vector2Add(projectile.velocity, target.velocity);
-            const float totalMass = projectile.mass + target.mass;
-            const float angle = Vector2Angle(angleDir, projectile.forceDir);
-            const float nangle = angle - PI;
-            target.velocity = Vector2Rotate(Vector2Scale(totalVelocity, projectile.mass / totalMass), angle);
-            projectile.velocity = Vector2Rotate(Vector2Scale(totalVelocity, target.mass / totalMass), nangle);
-            target.forceDir = Vector2Rotate(Vector2Scale(impact, projectile.mass / totalMass), angle);
-            projectile.forceDir = Vector2Rotate(Vector2Scale(impact, target.mass / totalMass), nangle);
-
-            #ifndef NDEBUG
-            DrawText("Collision Detected!", 300, 50, 20, RED);
-            #endif
-        }
-        
+        ColisionHandler(target, projectile);
         target.Tick();
         
         BeginDrawing();
