@@ -12,7 +12,7 @@ int main() {
     target.mass = 0.05; // gram
     target.coliderRadius = 23.0; // pixels
     target.crossSection = 0.01; // m^2
-    target.safeZone.radius = 50.0;
+    target.safeZone.radius = 40.0;
     target.decay = 15.0;
 
     Projectile projectile;
