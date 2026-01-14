@@ -16,16 +16,6 @@ bool TextureButton(Texture2D texture, Vector2 position, Color tint) {
     return CheckCollisionPointRec(GetMousePosition(), rect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
-bool DifficultyTextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover) {
-    Vector2 size = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
-    Rectangle rec = { pos.x, pos.y, size.x, size.y };
-
-    bool isHovered = CheckCollisionPointRec(GetMousePosition(), rec);
-    DrawText(text, pos.x, pos.y, fontSize, isHovered ? hover : normal);
-
-    return isHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
-}
-
 float GetCenteredXInBounds(const char* text, int fontSize, float left, float right) {
     int textWidth = MeasureText(text, fontSize);
     float boundsWidth = right - left;
