@@ -1,16 +1,10 @@
 #include <iostream>
 #include <raylib.h>
+#include "game.h"
 
 using namespace std;
 int main() {
-    cout << "Hello, World!" << endl;
-    InitWindow(800, 600, "Hello Raylib");
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Hello, Raylib!", 190, 200,20, LIGHTGRAY);
-        EndDrawing();
-    }
-    CloseWindow();
+    InitWindow(800, 600, "Flanki");
+    Game().Run();
     return 0;
 }
