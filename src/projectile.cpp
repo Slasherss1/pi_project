@@ -10,17 +10,19 @@ void Projectile::Draw() {
 #define POWER 2
 #define map_exp(from, to, power, value) (to * (pow(value/from, power)))
 
+#define XP_FORCE_MULTIPLIER 0.5  // TODO: Zmieniać na podstawie poziomu trudności (#8)
+
 float ForceMeterTick() {
     static float force = 0.0;
     static bool increasing = true;
     if (increasing) {
-        force += 0.5 * GetFrameTime() * pow(10, POWER);
+        force += GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
         if (force >= 128.0) {
             force = 128.0;
             increasing = false;
         }
     } else {
-        force -= 0.5 * GetFrameTime() * pow(10, POWER);
+        force -= GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
         if (force <= 0.0) {
             force = 0.0;
             increasing = true;
@@ -33,7 +35,7 @@ void AimableProjectile::Draw() {
     if (isShot) return;
     if (isAiming) {
         const float angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {-1.0, 0.0});
-        // TODO: Add aiming guide to proper beer
+        // TODO: Dodać wskaźnik tylko przy efekcie (#10)
         #ifndef NDEBUG
         DrawLineV(this->position, Vector2Add(Vector2Rotate({10000,0}, -angle), this->position), BLACK);
         #endif
