@@ -9,6 +9,7 @@ class AimableProjectile {
     private:
         bool isAiming = false;
         bool isShot = false;
+        float force = 0.0;
     public:
         Texture2D texture;
         Vector2 position = {0.0f, 0.0f};
