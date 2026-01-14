@@ -67,13 +67,13 @@ void Game::DrawSettingsMenu() {
     Texture2D hardTexture = isEasyMode ? whiteMan : redMan;;
 
     if (TextureButton(easyTexture, {100, 90}, WHITE)
-        or TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 500}, 20, easyColor, easyColor)
-        or TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 530}, 20, easyColor, easyColor))
+        || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 500}, 20, easyColor, easyColor)
+        || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 530}, 20, easyColor, easyColor))
         difficulty = GameDifficulty::EASY;
 
     if (TextureButton(hardTexture, {500, 90}, WHITE)
-        or TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 500}, 20, hardColor, hardColor)
-        or TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 530}, 20, hardColor, hardColor))
+        || TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 500}, 20, hardColor, hardColor)
+        || TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 530}, 20, hardColor, hardColor))
         difficulty = GameDifficulty::HARD;
 
     if (IsKeyPressed(KEY_SPACE)) state = GameState::START;
