@@ -17,7 +17,7 @@ void AimableProjectile::Draw() {
 }
 
 void AimableProjectile::Tick() {
-    // if (isShot) return;
+    if (isShot) return;
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
         isAiming = true;
     } else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
