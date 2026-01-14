@@ -69,8 +69,7 @@ int main() {
         DrawCircleV(target.position, target.coliderRadius, GOLD);
         if (projectilePtr != nullptr) {
             DrawCircleV(projectilePtr->position, projectilePtr->coliderRadius, BLUE);
-            DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->forceDir), 3, RED);
-            DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->velocity), 3, GREEN);
+            DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->forceDir), 3, BLACK);
         }
         DrawLineEx(target.position, Vector2Add(target.position, target.forceDir), 3, BLACK);
         #endif

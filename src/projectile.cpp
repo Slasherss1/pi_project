@@ -22,10 +22,7 @@ void AimableProjectile::Tick() {
         isAiming = true;
     } else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
         isAiming = false;
-        // Vector2 dir = Vector2Subtract(GetMousePosition(), this->position);
-        // TraceLog(LOG_DEBUG, "%f, %f\n", dir.x, dir.y);
-        Vector2 dir = {12, 155};
-        this->Shoot(dir);
+        this->Shoot(Vector2Subtract(GetMousePosition(), this->position));
     }
 }
 
