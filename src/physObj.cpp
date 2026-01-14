@@ -6,8 +6,13 @@ void PhysicsObj::Tick() {
     this->velocity.x += (GetFrameTime() * this->forceDir.x) / this->mass;
     this->velocity.y += (GetFrameTime() * this->forceDir.y) / this->mass;
     // drag
-    this->velocity.x -= (GetFrameTime() * (this->crossSection * this->velocity.x * fabs(this->velocity.x) / 2)) / this->mass;
-    this->velocity.y -= (GetFrameTime() * (this->crossSection * this->velocity.y * fabs(this->velocity.y) / 2)) / this->mass;
+    this->velocity = Vector2Subtract(
+        this->velocity,
+        Vector2Scale(
+            Vector2Normalize(this->velocity),
+            (GetFrameTime() * this->crossSection * Vector2LengthSqr(this->velocity) / 2) / this->mass
+        )
+    );
 
     // decay
     float fLen = Vector2Length(this->forceDir);
