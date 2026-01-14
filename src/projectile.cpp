@@ -8,6 +8,7 @@ void Projectile::Draw() {
 }
 
 #define POWER 2
+#define map_exp(from, to, power, value) (to * (pow(value/from, power)))
 
 float ForceMeterTick() {
     static float force = 0.0;
@@ -58,7 +59,7 @@ void AimableProjectile::Shoot(Vector2 forceDir) {
     *proj_pp = new Projectile();
     (*proj_pp)->position = this->position;
     (*proj_pp)->texture = this->texture;
-    (*proj_pp)->forceDir = Vector2Negate(Vector2Scale(Vector2Normalize(forceDir), sqrtf(force)*3.0));
+    (*proj_pp)->forceDir = Vector2Negate(Vector2Scale(Vector2Normalize(forceDir), map_exp(128, 100, 3, force)));
     (*proj_pp)->mass = 0.05; // kg
     (*proj_pp)->crossSection = 0.01; // m^2
     (*proj_pp)->coliderRadius = 20.0; // pixels
