@@ -10,7 +10,10 @@ void AimableProjectile::Draw() {
     if (isShot) return;
     if (isAiming) {
         const float angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {-1.0, 0.0});
+        // TODO: Add aiming guide to proper beer
+        #ifndef NDEBUG
         DrawLineV(this->position, Vector2Add(Vector2Rotate({10000,0}, -angle), this->position), BLACK);
+        #endif
         DrawRing(this->position, 32, 64, -angle*RAD2DEG+5, -angle*RAD2DEG-5, 5, BLACK);
     }
     DrawTexture(this->texture, this->position.x-32, this->position.y-32, WHITE);
@@ -35,5 +38,5 @@ void AimableProjectile::Shoot(Vector2 forceDir) {
     (*proj_pp)->mass = 0.05; // kg
     (*proj_pp)->crossSection = 0.01; // m^2
     (*proj_pp)->coliderRadius = 20.0; // pixels
-    // (*proj_pp)->decay = 3.0;
+    (*proj_pp)->decay = 3.0;
 }
