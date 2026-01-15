@@ -1,5 +1,7 @@
 #include "game.h"
+#include "level.h"
 #include "utils.h"
+#include <raylib.h>
 
 static const char* GAME_NAME = "Flanki";
 static const char* NEW_GAME = "Nowa gra";
@@ -12,71 +14,65 @@ static const char* FRESHMAN = "Swiezak";
 static const char* HARD = "Poziom trudnosci: trudny";
 static const char* GO_BACK = "Wroc";
 
-Game::Game() : state(GameState::START), difficulty(GameDifficulty::EASY) {
+#pragma region Menu
+void MainMenu::load() {
     menuTexture = LoadTexture("assets/menu.png");
-    settingsTexture = LoadTexture("assets/settings.png");
-    freshman = LoadTexture("assets/swiezak.png");
-    experienced = LoadTexture("assets/doswiadczony.png");
 }
 
-Game::~Game() {
+void MainMenu::unload() {
     UnloadTexture(menuTexture);
-    UnloadTexture(settingsTexture);
-    UnloadTexture(freshman);
-    UnloadTexture(experienced);
 }
 
-void Game::Run() {
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-        switch (state) {
-            case GameState::START:
-                DrawStartMenu();
-                break;
-            case GameState::SETTINGS:
-                DrawSettingsMenu();
-                break;
-            case GameState::GAME:
-                DrawGame();
-                break;
-        }
-        EndDrawing();
-    }
-    CloseWindow();
-}
-
-void Game::DrawStartMenu() {
+void MainMenu::loop() {
+    BeginDrawing();
     DrawBackground(menuTexture);
 
     DrawText(GAME_NAME, GetCenteredX(GAME_NAME, 100), 120, 100, YELLOW);
 
-    if (TextButton(NEW_GAME, {GetCenteredX(NEW_GAME, 40), 250}, 40, WHITE, RED)) state = GameState::GAME;
-    if (TextButton(LOAD_GAME, {GetCenteredX(LOAD_GAME, 40), 320}, 40, WHITE, RED)) state = GameState::GAME;
-    if (TextButton(SETTINGS, {GetCenteredX(SETTINGS, 40), 390}, 40, WHITE, RED)) state = GameState::SETTINGS;
+    if (TextButton(NEW_GAME, {GetCenteredX(NEW_GAME, 40), 250}, 40, WHITE, RED)) LevelManager::changeLevel(new MainMenu());
+    if (TextButton(LOAD_GAME, {GetCenteredX(LOAD_GAME, 40), 320}, 40, WHITE, RED)) LevelManager::changeLevel(new MainMenu());
+    if (TextButton(SETTINGS, {GetCenteredX(SETTINGS, 40), 390}, 40, WHITE, RED)) LevelManager::changeLevel(new SettingsMenu());
+    EndDrawing();
 }
 
-void Game::DrawSettingsMenu() {
+#pragma endregion
+
+#pragma region Settings
+void SettingsMenu::load() {
+    settingsTexture = LoadTexture("assets/settings.png");
+    whiteMan = LoadTexture("assets/whiteman.png");
+    redMan = LoadTexture("assets/redman.png");
+}
+
+void SettingsMenu::unload() {
+    UnloadTexture(settingsTexture);
+    UnloadTexture(whiteMan);
+    UnloadTexture(redMan);
+}
+
+void SettingsMenu::loop() {
+    bool isEasyMode = (difficulty == GameDifficulty::EASY);
+    Color easyColor = isEasyMode ? RED : WHITE;
+    Color hardColor = isEasyMode ? WHITE : RED;
+    Texture2D easyTexture = isEasyMode ? redMan : whiteMan;;
+    Texture2D hardTexture = isEasyMode ? whiteMan : redMan;;
+    if (IsKeyPressed(KEY_SPACE)) LevelManager::changeLevel(new MainMenu());
+    
+    BeginDrawing();
     DrawBackground(settingsTexture);
 
     DrawText(SELECT_DIFFICULTY, GetCenteredX(SELECT_DIFFICULTY, 45), 20, 45, YELLOW);
 
-    bool isEasyMode = (difficulty == GameDifficulty::EASY);
-    Color easyColor = isEasyMode ? RED : WHITE;
-    Color hardColor = isEasyMode ? WHITE : RED;
-
-    if (TextureButton(experienced, {35, 110}, WHITE)
-        || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 450}, 20, easyColor, easyColor)
-        || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 480}, 20, easyColor, easyColor))
+    if (TextureButton(easyTexture, {100, 90}, WHITE)
+        || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 500}, 20, easyColor, easyColor)
+        || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 530}, 20, easyColor, easyColor))
         difficulty = GameDifficulty::EASY;
 
-    if (TextureButton(freshman, {430, 110}, WHITE)
-        || TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 450}, 20, hardColor, hardColor)
-        || TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 480}, 20, hardColor, hardColor))
+    if (TextureButton(hardTexture, {500, 90}, WHITE)
+        || TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 500}, 20, hardColor, hardColor)
+        || TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 530}, 20, hardColor, hardColor))
         difficulty = GameDifficulty::HARD;
-
-    if (IsKeyPressed(KEY_SPACE)) state = GameState::START;
+    
+    EndDrawing();
 }
-
-void Game::DrawGame() {
-    ClearBackground(RAYWHITE);
-}
+#pragma endregion
