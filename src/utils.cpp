@@ -36,3 +36,21 @@ void DrawBackground(Texture2D texture) {
         WHITE
     );
 }
+
+std::string GetKeycodePrintableName(KeyboardKey key) {
+    switch (key) {
+        case KEY_SPACE: return "SPACJA";
+        case KEY_ENTER: return "ENTER";
+        case KEY_ESCAPE: return "ESCAPE";
+        case KEY_LEFT: return "LEWO";
+        case KEY_RIGHT: return "PRAWO";
+        case KEY_UP: return "GORA";
+        case KEY_DOWN: return "DOL";
+        default:
+            // For alphanumeric keys, we can convert directly
+            if ((key >= KEY_A && key <= KEY_Z) || (key >= KEY_ZERO && key <= KEY_NINE)) {
+                return std::string(1, (char)key);
+            }
+            return "UNKNOWN KEY";
+    }
+}
