@@ -45,6 +45,8 @@ target_sources(main
         "src/utils.cpp"
         "src/level.h"
         "src/level.cpp"
+        "src/game.h"
+        "src/game.cpp"
 )
 
 add_executable(PhysicsTest)
