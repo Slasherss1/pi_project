@@ -5,12 +5,12 @@
 #include <raylib.h>
 #include <string>
 
-Masher mash = Masher();
+Masher drinkMash = Masher();
 DrinkMeter drinkMeter = DrinkMeter();
 
 void Game::load() {
     bg = LoadTexture("assets/concrete.png");
-    mash.text = "Pij!";
+    drinkMash.text = "Pij!";
     drinkMeter.sipSize = 0.1f;
 }
 
@@ -19,15 +19,15 @@ void Game::unload() {
 }
 
 void Game::loop() {
-    mash.tick();
+    drinkMash.tick();
 
-    if (mash.isPressed()) {
+    if (drinkMash.isPressed()) {
         drinkMeter.sip();
     }
 
     BeginDrawing();
     DrawBackground(bg);
-    mash.draw();
+    drinkMash.draw();
     drinkMeter.draw();
 
     EndDrawing();
