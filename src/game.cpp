@@ -12,37 +12,34 @@ static const char* FRESHMAN = "Swiezak";
 static const char* HARD = "Poziom trudnosci: trudny";
 static const char* GO_BACK = "Wroc";
 
-Game::Game() : state(GameState::START), difficulty(GameDifficulty::EASY) {
+void Game::load()/* : state(GameState::START), difficulty(GameDifficulty::EASY) */{
     menuTexture = LoadTexture("assets/menu.png");
     settingsTexture = LoadTexture("assets/settings.png");
     whiteMan = LoadTexture("assets/whiteMan.png");
     redMan = LoadTexture("assets/redman.png");
 }
 
-Game::~Game() {
+void Game::unload() {
     UnloadTexture(menuTexture);
     UnloadTexture(settingsTexture);
     UnloadTexture(whiteMan);
     UnloadTexture(redMan);
 }
 
-void Game::Run() {
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-        switch (state) {
-            case GameState::START:
-                DrawStartMenu();
-                break;
-            case GameState::SETTINGS:
-                DrawSettingsMenu();
-                break;
-            case GameState::GAME:
-                DrawGame();
-                break;
-        }
-        EndDrawing();
+void Game::loop() {
+    BeginDrawing();
+    switch (state) {
+        case GameState::START:
+            DrawStartMenu();
+            break;
+        case GameState::SETTINGS:
+            DrawSettingsMenu();
+            break;
+        case GameState::GAME:
+            DrawGame();
+            break;
     }
-    CloseWindow();
+    EndDrawing();
 }
 
 void Game::DrawStartMenu() {
