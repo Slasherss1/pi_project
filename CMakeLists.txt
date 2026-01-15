@@ -49,6 +49,8 @@ target_sources(main
         "src/game.cpp"
         "src/masher.h"
         "src/masher.cpp"
+        "src/drinkMeter.h"
+        "src/drinkMeter.cpp"
 )
 
 add_executable(PhysicsTest)
