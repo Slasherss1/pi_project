@@ -22,5 +22,14 @@
             "valuesFormatting": "prettyPrinters",
             "preLaunchTask": "Build project"
         },
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "Launch Throw Test",
+            "target": "./build/ThrowTest",
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "prettyPrinters",
+            "preLaunchTask": "Build project"
+        },
     ]
 }

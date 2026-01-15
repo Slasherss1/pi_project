@@ -58,6 +58,19 @@ target_sources(PhysicsTest
         "src/target.h"
 )
 
+add_executable(ThrowTest)
+
+target_sources(ThrowTest
+    PRIVATE
+        "src/throwTest.cpp"
+        "src/physObj.cpp"
+        "src/physObj.h"
+        "src/projectile.cpp"
+        "src/projectile.h"
+        "src/target.cpp"
+        "src/target.h"
+)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
