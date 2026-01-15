@@ -15,8 +15,8 @@ private:
     GameDifficulty difficulty;
     Texture2D menuTexture;
     Texture2D settingsTexture;
-    Texture2D whiteMan;
-    Texture2D redMan;
+    Texture2D freshman;
+    Texture2D experienced;
     void DrawStartMenu();
     void DrawSettingsMenu();
     void DrawGame();

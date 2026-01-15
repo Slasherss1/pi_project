@@ -15,15 +15,15 @@ static const char* GO_BACK = "Wroc";
 Game::Game() : state(GameState::START), difficulty(GameDifficulty::EASY) {
     menuTexture = LoadTexture("assets/menu.png");
     settingsTexture = LoadTexture("assets/settings.png");
-    whiteMan = LoadTexture("assets/whiteMan.png");
-    redMan = LoadTexture("assets/redman.png");
+    freshman = LoadTexture("assets/swiezak.png");
+    experienced = LoadTexture("assets/doswiadczony.png");
 }
 
 Game::~Game() {
     UnloadTexture(menuTexture);
     UnloadTexture(settingsTexture);
-    UnloadTexture(whiteMan);
-    UnloadTexture(redMan);
+    UnloadTexture(freshman);
+    UnloadTexture(experienced);
 }
 
 void Game::Run() {
@@ -63,17 +63,15 @@ void Game::DrawSettingsMenu() {
     bool isEasyMode = (difficulty == GameDifficulty::EASY);
     Color easyColor = isEasyMode ? RED : WHITE;
     Color hardColor = isEasyMode ? WHITE : RED;
-    Texture2D easyTexture = isEasyMode ? redMan : whiteMan;;
-    Texture2D hardTexture = isEasyMode ? whiteMan : redMan;;
 
-    if (TextureButton(easyTexture, {100, 90}, WHITE)
-        || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 500}, 20, easyColor, easyColor)
-        || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 530}, 20, easyColor, easyColor))
+    if (TextureButton(experienced, {35, 110}, WHITE)
+        || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 450}, 20, easyColor, easyColor)
+        || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 480}, 20, easyColor, easyColor))
         difficulty = GameDifficulty::EASY;
 
-    if (TextureButton(hardTexture, {500, 90}, WHITE)
-        || TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 500}, 20, hardColor, hardColor)
-        || TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 530}, 20, hardColor, hardColor))
+    if (TextureButton(freshman, {430, 110}, WHITE)
+        || TextButton(FRESHMAN, {GetCenteredXInBounds(FRESHMAN, 20, 400, 800), 450}, 20, hardColor, hardColor)
+        || TextButton(HARD, {GetCenteredXInBounds(HARD, 20, 400, 800), 480}, 20, hardColor, hardColor))
         difficulty = GameDifficulty::HARD;
 
     if (IsKeyPressed(KEY_SPACE)) state = GameState::START;
