@@ -15,7 +15,7 @@ static const char* GO_BACK = "Wroc";
 void Game::load()/* : state(GameState::START), difficulty(GameDifficulty::EASY) */{
     menuTexture = LoadTexture("assets/menu.png");
     settingsTexture = LoadTexture("assets/settings.png");
-    whiteMan = LoadTexture("assets/whiteMan.png");
+    whiteMan = LoadTexture("assets/whiteman.png");
     redMan = LoadTexture("assets/redman.png");
 }
 
