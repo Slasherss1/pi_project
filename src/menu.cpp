@@ -1,7 +1,4 @@
-#include <raylib.h>
-#include <cmath>
-#include "game.h"
-#include "town_map.h"
+#include "menu.h"
 #include "level.h"
 #include "utils.h"
 

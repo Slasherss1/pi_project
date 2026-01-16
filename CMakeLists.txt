@@ -39,12 +39,18 @@ target_sources(main
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
-        "src/game.h"
-        "src/game.cpp"
+        "src/menu.h"
+        "src/menu.cpp"
         "src/utils.h"
         "src/utils.cpp"
         "src/level.h"
         "src/level.cpp"
+        "src/throwRound.h"
+        "src/throwRound.cpp"
+        "src/masher.h"
+        "src/masher.cpp"
+        "src/drinkMeter.h"
+        "src/drinkMeter.cpp"
         "src/town_map.h"
         "src/town_map.cpp"
 )
@@ -60,7 +66,7 @@ target_sources(PhysicsTest
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
- "src/town_map.h" "src/town_map.cpp")
+)
 
 add_executable(ThrowTest)
 
@@ -73,7 +79,7 @@ target_sources(ThrowTest
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
- "src/town_map.h" "src/town_map.cpp")
+)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
