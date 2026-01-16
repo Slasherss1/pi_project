@@ -64,6 +64,6 @@ void AimableProjectile::Shoot(Vector2 forceDir) {
     (*proj_pp)->forceDir = Vector2Negate(Vector2Scale(Vector2Normalize(forceDir), map_exp(128, 250, 3, force)));
     (*proj_pp)->mass = 0.05; // kg
     (*proj_pp)->crossSection = 0.01; // m^2
-    (*proj_pp)->coliderRadius = 20.0; // pixels
+    (*proj_pp)->colliderRadius = 20.0; // pixels
     (*proj_pp)->decay = 3.0;
 }

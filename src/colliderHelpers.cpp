@@ -3,7 +3,7 @@
 
 void CollideAndBounce::handleCollision(PhysicsObj * obj1, PhysicsObj * obj2) {
     if (obj1 == nullptr || obj2 == nullptr) return;
-    if (CheckCollisionCircles(obj1->position, obj1->coliderRadius, obj2->position, obj2->coliderRadius)) {
+    if (CheckCollisionCircles(obj1->position, obj1->colliderRadius, obj2->position, obj2->colliderRadius)) {
         if (isColliding) return;
         isColliding = true;
     } else {

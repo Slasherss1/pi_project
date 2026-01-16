@@ -11,7 +11,7 @@ using namespace std;
 void PhysicsTest::load() {
     target.texture = LoadTexture("assets/cel.png");
     target.mass = 0.05; // gram
-    target.coliderRadius = 23.0; // pixels
+    target.colliderRadius = 23.0; // pixels
     target.crossSection = 0.01; // m^2
     target.safeZone.radius = 40.0;
     target.decay = 15.0;
@@ -20,7 +20,7 @@ void PhysicsTest::load() {
     projectile.forceDir = {50.0, 35.0};
     projectile.mass = 0.05; // kg
     projectile.crossSection = 0.01; // m^2
-    projectile.coliderRadius = 20.0; // pixels
+    projectile.colliderRadius = 20.0; // pixels
     projectile.decay = 3.0;
 
 }
@@ -40,8 +40,8 @@ void PhysicsTest::loop() {
     
     #ifndef NDEBUG
     DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
-    DrawCircleV(target.position, target.coliderRadius, GOLD);
-    DrawCircleV(projectile.position, projectile.coliderRadius, BLUE);
+    DrawCircleV(target.position, target.colliderRadius, GOLD);
+    DrawCircleV(projectile.position, projectile.colliderRadius, BLUE);
     DrawLineEx(projectile.position, Vector2Add(projectile.position, projectile.forceDir), 3, BLACK);
     DrawLineEx(target.position, Vector2Add(target.position, target.forceDir), 3, BLACK);
     #endif

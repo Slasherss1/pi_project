@@ -11,7 +11,7 @@ using namespace std;
 void ThrowTest::load() {
     target.texture = LoadTexture("assets/cel.png");
     target.mass = 0.05; // gram
-    target.coliderRadius = 23.0; // pixels
+    target.colliderRadius = 23.0; // pixels
     target.crossSection = 0.01; // m^2
     target.safeZone.radius = 40.0;
     target.decay = 15.0;
@@ -39,9 +39,9 @@ void ThrowTest::loop() {
     
     #ifndef NDEBUG
     DrawCircleV(target.safeZone.position, target.safeZone.radius, RED);
-    DrawCircleV(target.position, target.coliderRadius, GOLD);
+    DrawCircleV(target.position, target.colliderRadius, GOLD);
     if (projectilePtr != nullptr) {
-        DrawCircleV(projectilePtr->position, projectilePtr->coliderRadius, BLUE);
+        DrawCircleV(projectilePtr->position, projectilePtr->colliderRadius, BLUE);
         DrawLineEx(projectilePtr->position, Vector2Add(projectilePtr->position, projectilePtr->forceDir), 3, BLACK);
     }
     DrawLineEx(target.position, Vector2Add(target.position, target.forceDir), 3, BLACK);
