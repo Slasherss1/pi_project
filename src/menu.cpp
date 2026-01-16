@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "level.h"
 #include "utils.h"
+#include "town_map.h"
 
 static const char* GAME_NAME = "Flanki";
 static const char* NEW_GAME = "Nowa gra";
@@ -33,7 +34,6 @@ void MainMenu::loop() {
     if (TextButton(SETTINGS, {GetCenteredX(SETTINGS, 40), 390}, 40, WHITE, RED)) LevelManager::changeLevel(new SettingsMenu());
     EndDrawing();
 }
-
 #pragma endregion
 
 #pragma region Settings
