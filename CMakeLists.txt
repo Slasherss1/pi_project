@@ -45,6 +45,8 @@ target_sources(main
         "src/utils.cpp"
         "src/level.h"
         "src/level.cpp"
+        "src/town_map.h"
+        "src/town_map.cpp"
 )
 
 add_executable(PhysicsTest)
@@ -58,7 +60,7 @@ target_sources(PhysicsTest
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
-)
+ "src/town_map.h" "src/town_map.cpp")
 
 add_executable(ThrowTest)
 
@@ -71,7 +73,7 @@ target_sources(ThrowTest
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
-)
+ "src/town_map.h" "src/town_map.cpp")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
