@@ -3,7 +3,7 @@
 
 #pragma once
 
-class Game : public Level {
+class ThrowRound : public Level {
     private:
         Texture2D bg;
     public:
