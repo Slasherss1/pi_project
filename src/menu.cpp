@@ -1,5 +1,7 @@
 #include "menu.h"
 #include "level.h"
+#include "physicsTest.h"
+#include "throwTest.h"
 #include "utils.h"
 #include <raylib.h>
 
@@ -32,6 +34,10 @@ void MainMenu::loop() {
     if (TextButton(NEW_GAME, {GetCenteredX(NEW_GAME, 40), 250}, 40, WHITE, RED)) LevelManager::changeLevel(new MainMenu());
     if (TextButton(LOAD_GAME, {GetCenteredX(LOAD_GAME, 40), 320}, 40, WHITE, RED)) LevelManager::changeLevel(new MainMenu());
     if (TextButton(SETTINGS, {GetCenteredX(SETTINGS, 40), 390}, 40, WHITE, RED)) LevelManager::changeLevel(new SettingsMenu());
+
+    #ifndef NDEBUG
+    if (TextButton("DEBUG", {0,GetScreenHeight()-42.0f}, 42, BLUE, RED)) LevelManager::changeLevel(new DebugChooserMenu());
+    #endif
     EndDrawing();
 }
 
@@ -75,4 +81,23 @@ void SettingsMenu::loop() {
     
     EndDrawing();
 }
+#pragma endregion
+
+#pragma region DebugChooser
+#ifndef NDEBUG
+void DebugChooserMenu::load() {
+    // Load resources if needed
+}
+void DebugChooserMenu::unload() {
+    // Unload resources if needed
+}
+void DebugChooserMenu::loop() {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    if (TextButton("Physics", {0,0}, 22, BLACK, RED)) LevelManager::changeLevel(new PhysicsTest());
+    if (TextButton("Throw", {0,22}, 22, BLACK, RED)) LevelManager::changeLevel(new ThrowTest());
+
+    EndDrawing();
+}
+#endif
 #pragma endregion
