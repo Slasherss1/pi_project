@@ -39,12 +39,18 @@ target_sources(main
         "src/projectile.h"
         "src/target.cpp"
         "src/target.h"
-        "src/game.h"
-        "src/game.cpp"
+        "src/menu.h"
+        "src/menu.cpp"
         "src/utils.h"
         "src/utils.cpp"
         "src/level.h"
         "src/level.cpp"
+        "src/throwRound.h"
+        "src/throwRound.cpp"
+        "src/masher.h"
+        "src/masher.cpp"
+        "src/drinkMeter.h"
+        "src/drinkMeter.cpp"
 )
 
 add_executable(PhysicsTest)
