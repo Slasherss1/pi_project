@@ -1,5 +1,6 @@
 #include <cmath>
 #include "town_map.h"
+#include "menu.h"
 
 void TownMap::load() {
     map = LoadTexture("assets/mapa.png");
@@ -8,10 +9,14 @@ void TownMap::load() {
     playerPosition = { (float)map.width / 2, (float)map.height / 2 };
     playerRotation = 0.0f;
     playerSpeed = 200.0f;
+	updatePlayerHitBox();
 
     camera.offset = { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 };
     camera.target = playerPosition;
     camera.zoom = 1.0f;
+    
+    shopLocations[0] = { 400, float(map.height - 50), 50, 50 };
+    shopLocations[1] = { 10, float(map.height - 50), 50, 50 };
 }
 
 void TownMap::unload() {
@@ -26,13 +31,13 @@ void TownMap::loop() {
     BeginMode2D(camera);
 
     DrawTexture(map, 0, 0, WHITE);
-    DrawRectangle(400, map.height - 50, 50, 50, RED);
-    DrawRectangle(10, map.height - 50, 50, 50, RED);
-
-    /*if ((playerPosition.x > 400 && playerPosition.x < 450 &&
-         playerPosition.y > map.height - 50 && playerPosition.y < map.height) || (playerPosition.x )) {
+    DrawRectangleRec(shopLocations[0], RED);
+	DrawRectangleRec(shopLocations[1], RED);
+    
+	if (CheckCollisionRecs(playerBox, shopLocations[0]) || 
+        CheckCollisionRecs(playerBox, shopLocations[1])) {
         LevelManager::changeLevel(new MainMenu());
-    }*/
+    }
 
     // Zastosowane w celu mozliwosci ustawienia origin w srodku tekstury,
     // dzieki czemu obraca sie wzgledem srodka
@@ -44,6 +49,15 @@ void TownMap::loop() {
 
     EndMode2D();
     EndDrawing();
+}
+
+void TownMap::updatePlayerHitBox() {
+    playerBox = {
+        playerPosition.x - currentPlayerTexture.width / 2.0f,
+        playerPosition.y - currentPlayerTexture.height / 2.0f,
+        (float)currentPlayerTexture.width,
+        (float)currentPlayerTexture.height
+    };
 }
 
 void TownMap::determinePlayerMovement(float deltaTime) {
@@ -67,13 +81,14 @@ void TownMap::determinePlayerMovement(float deltaTime) {
         playerPosition.y += movement.y * playerSpeed * deltaTime;
     }
 
-    float halfWidth = (float)currentPlayerTexture.width / 2.0f;
-    float halfHeight = (float)currentPlayerTexture.height / 2.0f;
+	updatePlayerHitBox();
 
-    if (playerPosition.x - halfWidth < 0) playerPosition.x = halfWidth;
-    if (playerPosition.y - halfHeight < 0) playerPosition.y = halfHeight;
-    if (playerPosition.x + halfWidth > map.width) playerPosition.x = map.width - halfWidth;
-    if (playerPosition.y + halfHeight > map.height) playerPosition.y = map.height - halfHeight;
+    if (playerBox.x < 0) playerPosition.x = currentPlayerTexture.width / 2.0f;
+    if (playerBox.y < 0) playerPosition.y = currentPlayerTexture.height / 2.0f;
+    if (playerBox.x + playerBox.width > map.width)   playerPosition.x = map.width - currentPlayerTexture.width / 2.0f;
+    if (playerBox.y + playerBox.height > map.height) playerPosition.y = map.height - currentPlayerTexture.height / 2.0f;
+
+	updatePlayerHitBox();
 
     camera.target = playerPosition;
 
