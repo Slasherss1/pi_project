@@ -1,6 +1,5 @@
 #pragma once
 #include <raylib.h>
-#include <array>
 #include "level.h"
 
 class TownMap : public Level {
@@ -17,7 +16,7 @@ private:
     float playerRotation;
     float playerSpeed;
     Camera2D camera;
-    std::array<Rectangle, 2> shopLocations;
+    Rectangle shopEntry;
 
     void determinePlayerMovement(float deltaTime);
     void updatePlayerHitBox();

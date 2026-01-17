@@ -59,6 +59,8 @@ target_sources(main
         "src/throwTest.cpp"
         "src/colliderHelpers.h"
         "src/colliderHelpers.cpp"
+        "src/shop.h"
+        "src/shop.cpp"
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

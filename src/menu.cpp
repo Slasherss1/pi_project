@@ -66,7 +66,7 @@ void SettingsMenu::loop() {
 
     DrawText(SELECT_DIFFICULTY, GetCenteredX(SELECT_DIFFICULTY, 45), 20, 45, YELLOW);
 
-    if (TextureButton(veteran, {30, 110}, WHITE)
+    if (TextureButton(veteran, {35, 110}, WHITE)
         || TextButton(EXPERIENCED, {GetCenteredXInBounds(EXPERIENCED, 20, 0, 400), 450}, 20, easyColor, easyColor)
         || TextButton(EASY, {GetCenteredXInBounds(EASY, 20, 0, 400), 480}, 20, easyColor, easyColor))
         difficulty = GameDifficulty::EASY;

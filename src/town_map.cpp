@@ -1,11 +1,14 @@
-#include <cmath>
+﻿#include <cmath>
+#include "utils.h"
 #include "town_map.h"
-#include "menu.h"
+#include "shop.h"
+
+static const char* SHOP_NAME = "V STUDECIAK V";
 
 void TownMap::load() {
     map = LoadTexture("assets/mapa.png");
 
-    currentPlayerTexture = LoadTexture("assets/student1_p.png");
+    currentPlayerTexture = LoadTexture("assets/miniziel1.png");
     playerPosition = { (float)map.width / 2, (float)map.height / 2 };
     playerRotation = 0.0f;
     playerSpeed = 200.0f;
@@ -15,8 +18,7 @@ void TownMap::load() {
     camera.target = playerPosition;
     camera.zoom = 1.0f;
     
-    shopLocations[0] = { 400, float(map.height - 50), 50, 50 };
-    shopLocations[1] = { 10, float(map.height - 50), 50, 50 };
+    shopEntry = { 10, float(map.height - 50), 440, 50 };
 }
 
 void TownMap::unload() {
@@ -31,12 +33,10 @@ void TownMap::loop() {
     BeginMode2D(camera);
 
     DrawTexture(map, 0, 0, WHITE);
-    DrawRectangleRec(shopLocations[0], RED);
-	DrawRectangleRec(shopLocations[1], RED);
+    DrawText(SHOP_NAME, GetCenteredXInBounds(SHOP_NAME, 50, 60, 400), map.height - 50, 50, YELLOW);
     
-	if (CheckCollisionRecs(playerBox, shopLocations[0]) || 
-        CheckCollisionRecs(playerBox, shopLocations[1])) {
-        LevelManager::changeLevel(new MainMenu());
+	if (CheckCollisionRecs(playerBox, shopEntry)) {
+        LevelManager::changeLevel(new Shop());
     }
 
     // Zastosowane w celu mozliwosci ustawienia origin w srodku tekstury,
@@ -69,18 +69,19 @@ void TownMap::determinePlayerMovement(float deltaTime) {
     if (IsKeyDown(KEY_D)) movement.x += 1.0f;
 
     if (movement.x != 0.0f || movement.y != 0.0f) {
-        // To usuwa problem szybszego poruszania sie po przekatnej
+		// eliminacja szybszego ruchu po przekatnej
         float length = sqrtf(movement.x * movement.x + movement.y * movement.y);
         movement.x /= length;
         movement.y /= length;
 
-        // To ustawia rotacje gracza w kierunku ruchu
+		// ustawienie rotacji gracza w kierunku ruchu
         playerRotation = atan2f(movement.y, movement.x) * RAD2DEG - 90.0f;
 
         playerPosition.x += movement.x * playerSpeed * deltaTime;
         playerPosition.y += movement.y * playerSpeed * deltaTime;
     }
 
+	///// OBSLUGA KOLIZJI Z GRANICAMI MAPY /////
 	updatePlayerHitBox();
 
     if (playerBox.x < 0) playerPosition.x = currentPlayerTexture.width / 2.0f;
