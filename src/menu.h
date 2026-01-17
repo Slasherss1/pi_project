@@ -1,6 +1,6 @@
 #pragma once
-#include "level.h"
 #include <raylib.h>
+#include "level.h"
 
 enum class GameDifficulty { EASY, HARD };
 
@@ -25,8 +25,8 @@ class SettingsMenu : public Level {
         
     private:
         Texture2D settingsTexture;
-        Texture2D whiteMan;
-        Texture2D redMan;
+        Texture2D freshman;
+        Texture2D veteran;
         Texture2D settingsBackground;
         GameDifficulty difficulty; // TODO: Przenieść do innej klasy
         void DrawSettingsOptions();
