@@ -1,3 +1,4 @@
+#pragma once
 #include <array>
 #include <raylib.h>
 #include "level.h"

@@ -20,6 +20,9 @@ void Shop::load() {
 
 void Shop::unload() {
 	UnloadTexture(shopInterior);
+	for (const auto& beer : beers) {
+		UnloadTexture(beer);
+	}
 }
 
 void Shop::loop() {
