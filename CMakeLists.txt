@@ -47,6 +47,8 @@ target_sources(main
         "src/level.cpp"
         "src/throwRound.h"
         "src/throwRound.cpp"
+        "src/town_map.h"
+        "src/town_map.cpp"
         "src/masher.h"
         "src/masher.cpp"
         "src/drinkMeter.h"
