@@ -16,7 +16,6 @@ public:
     InventoryManager(const InventoryManager&) = delete;
     void operator=(const InventoryManager&) = delete;
 
-	void changeDifficulty(GameDifficulty diff);
 
     // TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie i perki
     void addBeer(const std::string& beer);
@@ -28,11 +27,14 @@ public:
 	int getWallet() const;
     std::vector<std::string> getBeers() const;
 
+    GameDifficulty getDifficulty() const;
+	void setDifficulty(GameDifficulty diff);
+
 	bool saveInventory(const std::string& filename) const;
 	bool loadInventory(const std::string& filename);
 
 private:
-    InventoryManager() {}
+    InventoryManager() : wallet(0), difficulty(GameDifficulty::EASY), beers({}) { }
 
     int wallet;
     std::vector<std::string> beers;

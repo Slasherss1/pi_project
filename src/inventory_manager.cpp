@@ -2,7 +2,7 @@
 #include <sstream>
 #include <cstring>
 
-void InventoryManager::changeDifficulty(GameDifficulty diff) {
+void InventoryManager::setDifficulty(GameDifficulty diff) {
 	difficulty = diff;
 }
 
@@ -33,6 +33,10 @@ int InventoryManager::getWallet() const {
 
 std::vector<std::string> InventoryManager::getBeers() const {
 	return beers;
+}
+
+GameDifficulty InventoryManager::getDifficulty() const {
+	return difficulty;
 }
 
 bool InventoryManager::saveInventory(const std::string& filename) const {

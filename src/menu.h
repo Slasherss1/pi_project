@@ -2,8 +2,6 @@
 #include <raylib.h>
 #include "level.h"
 
-enum class GameDifficulty { EASY, HARD };
-
 class MainMenu : public Level {
     public:
         void load() override;
@@ -28,7 +26,6 @@ class SettingsMenu : public Level {
         Texture2D freshman;
         Texture2D veteran;
         Texture2D settingsBackground;
-        GameDifficulty difficulty; // TODO: Przenieść do innej klasy
         void DrawSettingsOptions();
 };
 
