@@ -31,3 +31,12 @@ class SettingsMenu : public Level {
         GameDifficulty difficulty; // TODO: Przenieść do innej klasy
         void DrawSettingsOptions();
 };
+
+#ifndef NDEBUG
+class DebugChooserMenu : public Level {
+    public:
+        void load() override;
+        void unload() override;
+        void loop() override;
+};
+#endif

@@ -1,4 +1,5 @@
 #include "physObj.h"
+#pragma once
 
 class Projectile : public PhysicsObj {
     public:

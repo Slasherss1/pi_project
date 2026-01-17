@@ -1,4 +1,5 @@
 #include "physObj.h"
+#pragma once
 
 typedef struct SafeZone {
     Vector2 position;

@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <raylib.h>
 
 bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover) {
     Vector2 size = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
@@ -7,13 +8,13 @@ bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color
     bool isHovered = CheckCollisionPointRec(GetMousePosition(), rec);
     DrawText(text, pos.x, pos.y, fontSize, isHovered ? hover : normal);
 
-    return isHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+    return isHovered && IsMouseButtonReleased(MOUSE_LEFT_BUTTON);
 }
 
 bool TextureButton(Texture2D texture, Vector2 position, Color tint) {
     Rectangle rect = { position.x, position.y, (float) texture.width, (float) texture.height };
     DrawTexture(texture, (int) position.x, (int) position.y, tint);
-    return CheckCollisionPointRec(GetMousePosition(), rect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+    return CheckCollisionPointRec(GetMousePosition(), rect) && IsMouseButtonReleased(MOUSE_LEFT_BUTTON);
 }
 
 float GetCenteredXInBounds(const char* text, int fontSize, float left, float right) {

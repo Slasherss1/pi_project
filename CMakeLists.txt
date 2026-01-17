@@ -51,34 +51,12 @@ target_sources(main
         "src/masher.cpp"
         "src/drinkMeter.h"
         "src/drinkMeter.cpp"
-        "src/town_map.h"
-        "src/town_map.cpp"
-)
-
-add_executable(PhysicsTest)
-
-target_sources(PhysicsTest
-    PRIVATE
+        "src/physicsTest.h"
         "src/physicsTest.cpp"
-        "src/physObj.cpp"
-        "src/physObj.h"
-        "src/projectile.cpp"
-        "src/projectile.h"
-        "src/target.cpp"
-        "src/target.h"
-)
-
-add_executable(ThrowTest)
-
-target_sources(ThrowTest
-    PRIVATE
+        "src/throwTest.h"
         "src/throwTest.cpp"
-        "src/physObj.cpp"
-        "src/physObj.h"
-        "src/projectile.cpp"
-        "src/projectile.h"
-        "src/target.cpp"
-        "src/target.h"
+        "src/colliderHelpers.h"
+        "src/colliderHelpers.cpp"
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
