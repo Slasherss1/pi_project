@@ -9,7 +9,7 @@ class PhysicsObj {
         Vector2 forceDir = {0.0f, 0.0f};
         float crossSection = 0.0f;
 
-        float coliderRadius = 0.0f;
+        float colliderRadius = 0.0f;
 
         float decay = 0.0f;
 
