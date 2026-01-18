@@ -55,6 +55,7 @@ void Shop::loop() {
 void Shop::showBeersWithInfo() {
 	InventoryManager& inventory = InventoryManager::getInstance();
 	
+	//TODO: mozna przeniesc do utils.h
 	// Dane do rownego rysowania
 	const int BEER_PRICE = 1;
 	const int BEERS_PER_ROW = 3;

@@ -3,9 +3,11 @@
 #include "town_map.h"
 #include "shop.h"
 #include "menu.h"
+#include "inventory.h"
 #include "inventory_manager.h"
 
 static const char* SHOP_NAME = "V STUDECIAK V";
+static const char* INVENTORY_BUTTON = "Ekwipunek";
 
 void TownMap::load() {
     map = LoadTexture("assets/mapa.png");
@@ -33,7 +35,10 @@ void TownMap::unload() {
 void TownMap::loop() {
     determinePlayerMovement(GetFrameTime());
 
-	if (IsKeyDown(KEY_ESCAPE)) LevelManager::changeLevel(new MainMenu());
+	if (IsKeyDown(KEY_ESCAPE)) {
+		LevelManager::changeLevel(new MainMenu());
+		return;
+	}
 
     BeginDrawing();
     BeginMode2D(camera);
@@ -43,6 +48,7 @@ void TownMap::loop() {
     
 	if (CheckCollisionRecs(playerBox, shopEntry)) {
         LevelManager::changeLevel(new Shop());
+		return;
     }
 
     // Zastosowane w celu mozliwosci ustawienia origin w srodku tekstury,
@@ -54,6 +60,18 @@ void TownMap::loop() {
     DrawTexturePro(currentPlayerTexture, source, dest, origin, playerRotation, WHITE);
 
     EndMode2D();
+	
+	// Przycisk ekwipunku w prawym dolnym rogu (poza Mode2D - czesc UI)
+	int buttonFontSize = 30;
+	int margin = 10;
+	int buttonX = GetScreenWidth() - MeasureText(INVENTORY_BUTTON, buttonFontSize) - margin;
+	int buttonY = GetScreenHeight() - buttonFontSize - margin;
+	
+	if (TextButton(INVENTORY_BUTTON, {(float)buttonX, (float)buttonY}, buttonFontSize, WHITE, YELLOW)) {
+		LevelManager::changeLevel(new Inventory());
+		return;
+	}
+	
     EndDrawing();
 }
 

@@ -22,6 +22,7 @@ public:
 
 
     // TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie, cena i perki
+	// polaczone z Shop i Inventory
     void addBeer(const std::string& beer);
 	bool removeBeer(const std::string& beer);
 	int countBeer(const std::string& beer) const;
