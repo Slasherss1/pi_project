@@ -61,7 +61,7 @@ target_sources(main
         "src/colliderHelpers.cpp"
         "src/shop.h"
         "src/shop.cpp"
-)
+ "src/inventory.h" "src/inventory.cpp" "src/inventory_manager.h" "src/inventory_manager.cpp")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
