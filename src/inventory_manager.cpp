@@ -104,3 +104,8 @@ bool InventoryManager::loadInventory(const std::string& filename) {
 	return true;
 }
 
+void InventoryManager::resetInventory() {
+	wallet = 0;
+	difficulty = GameDifficulty::EASY;
+	beers.clear();
+}

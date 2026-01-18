@@ -9,6 +9,8 @@ static const char* SHOP_INSTRUCTION = "Nacisnij SPACJE, aby wyjsc";
 static const char* WALLET_STATUS = "Portfel: ";
 
 void Shop::load() {
+	// na potrzeby testow
+	InventoryManager::getInstance().addMoney(5);
 	shopInterior = LoadTexture("assets/studenciak.png");
 	beers = {
 		LoadTexture("assets/carlsberg.png"),
@@ -32,7 +34,7 @@ void Shop::loop() {
 		LevelManager::changeLevel(new TownMap());
 	}
 
-	std::string wallet = "Portfel: " + std::to_string(InventoryManager::getInstance().getWallet()) + " PLN";
+	std::string wallet = "Portfel: " + std::to_string(InventoryManager::getInstance().getWallet()) + "zl";
 
 	BeginDrawing();
 

@@ -6,6 +6,7 @@
 int main() {
     InitWindow(800, 600, "Flanki");
 	SetTargetFPS(60);
+	SetExitKey(KEY_NULL);
 
     LevelManager::changeLevel(new MainMenu());
     while (!WindowShouldClose())

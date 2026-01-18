@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "town_map.h"
 #include "shop.h"
+#include "menu.h"
+#include "inventory_manager.h"
 
 static const char* SHOP_NAME = "V STUDECIAK V";
 
@@ -24,10 +26,14 @@ void TownMap::load() {
 void TownMap::unload() {
     UnloadTexture(map);
     UnloadTexture(currentPlayerTexture);
+
+	InventoryManager::getInstance().saveInventory(SAVE_FILE);
 }
 
 void TownMap::loop() {
     determinePlayerMovement(GetFrameTime());
+
+	if (IsKeyDown(KEY_ESCAPE)) LevelManager::changeLevel(new MainMenu());
 
     BeginDrawing();
     BeginMode2D(camera);

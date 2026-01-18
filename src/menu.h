@@ -10,9 +10,11 @@ class MainMenu : public Level {
 
     private:
         Texture2D menuTexture;
+        bool showOverwriteDialog;
         void DrawStartMenu();
         void DrawSettingsMenu();
         void DrawGame();
+        void DrawOverwriteDialog();
 };
     
 class SettingsMenu : public Level {
