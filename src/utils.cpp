@@ -39,7 +39,7 @@ void DrawBackground(Texture2D texture) {
 
 std::unordered_map<std::string, Texture2D> loadBeerTextures() {
     std::unordered_map<std::string, Texture2D> beerTextures;
-    for (const auto& beer : beers) {
+    for (const auto& beer : BeerRegistry::getInstance().getAllBeers()) {
         beerTextures[beer.getName()] = LoadTexture(beer.getImageName().c_str());
     }
     return beerTextures;
@@ -52,14 +52,15 @@ void unloadBeerTextures(std::unordered_map<std::string, Texture2D>& beerTextures
     beerTextures.clear();
 }
 
-void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showPrice) {
-	InventoryManager& inventory = InventoryManager::getInstance();
+void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showMore) {
+InventoryManager& inventory = InventoryManager::getInstance();
+const std::vector<Beer>& beers = BeerRegistry::getInstance().getAllBeers();
 
-	// Dane do rownego rysowania
-	const int BEERS_PER_ROW = 3;
-	const int START_Y = 150;
-	const int ROW_SPACING = 250;
-	const int BEER_SPACING = 800 / (BEERS_PER_ROW + 1);
+// Dane do rownego rysowania
+const int BEERS_PER_ROW = 3;
+const int START_Y = 150;
+const int ROW_SPACING = 250;
+const int BEER_SPACING = 800 / (BEERS_PER_ROW + 1);
 
 	for (int i = 0; i < beers.size(); i++) {
 		int row = i / BEERS_PER_ROW;
@@ -79,8 +80,8 @@ void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, boo
 		int nameY = y + currentTexture.height + 5;
 		DrawText(beerName.c_str(), nameX, nameY, 18, WHITE);
 
-		// Rysowanie ceny
-        if (showPrice) {
+        if (showMore) {
+			// Rysowanie ceny
             int currentPrice = beers[i].getPrice();
 
 		    std::string priceText = "Cena: " + std::to_string(currentPrice) + "zl";
@@ -89,6 +90,20 @@ void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, boo
 		    int priceY = nameY + 25;
 
 		    DrawText(priceText.c_str(), priceX, priceY, 16, WHITE);
+
+			// Wyswietlanie efektów
+			const auto& effects = beers[i].getEffects();
+			int effectY = priceY + 20;
+			int effectFontSize = 12;
+			
+			for (const auto& effect : effects) {
+                std::string effectText = GetEffectDescription(effect);
+				int effectWidth = MeasureText(effectText.c_str(), effectFontSize);
+				int effectX = BEER_SPACING * (col + 1) - effectWidth / 2;
+				
+				DrawText(effectText.c_str(), effectX, effectY, effectFontSize, YELLOW);
+				effectY += effectFontSize + 3;
+			}
 
 		    if (clicked) {
 			    if (inventory.getWallet() >= currentPrice) {

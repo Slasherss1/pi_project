@@ -61,7 +61,16 @@ target_sources(main
         "src/colliderHelpers.cpp"
         "src/shop.h"
         "src/shop.cpp"
- "src/inventory.h" "src/inventory.cpp" "src/inventory_manager.h" "src/inventory_manager.cpp" "src/beer.h")
+        "src/inventory.h"
+        "src/inventory.cpp"
+        "src/inventory_manager.h"
+        "src/inventory_manager.cpp"
+        "src/beer.h"
+        "src/beer_effect.h"
+        "src/beer_effect.cpp"
+        "src/beer_registry.h"
+        "src/beer_registry.cpp"
+)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

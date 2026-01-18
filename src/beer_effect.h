@@ -35,3 +35,8 @@ struct BeerEffect {
     BeerEffect(EffectType t, EffectTrigger trig, float val)
         : type(t), trigger(trig), value(val) {}
 };
+
+// Funkcje pomocnicze
+std::string GetEffectTypeName(EffectType type);
+std::string GetEffectTriggerName(EffectTrigger trigger);
+std::string GetEffectDescription(const BeerEffect& effect);
