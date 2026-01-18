@@ -1,7 +1,4 @@
-#include <raylib.h>
-#include <array>
 #include "utils.h"
-#include "inventory_manager.h"
 
 bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover) {
     Vector2 size = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
@@ -40,11 +37,25 @@ void DrawBackground(Texture2D texture) {
     );
 }
 
-void showBeersInfo(std::array<std::pair<Texture2D, std::string>, 6>beers, bool showPrice) {
+std::unordered_map<std::string, Texture2D> loadBeerTextures() {
+    std::unordered_map<std::string, Texture2D> beerTextures;
+    for (const auto& beer : beers) {
+        beerTextures[beer.getName()] = LoadTexture(beer.getImageName().c_str());
+    }
+    return beerTextures;
+}
+
+void unloadBeerTextures(std::unordered_map<std::string, Texture2D>& beerTextures) {
+    for (auto& [beerName, beerTexture] : beerTextures) {
+        UnloadTexture(beerTexture);
+    }
+    beerTextures.clear();
+}
+
+void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showPrice) {
 	InventoryManager& inventory = InventoryManager::getInstance();
 
 	// Dane do rownego rysowania
-	const int BEER_PRICE = 1;
 	const int BEERS_PER_ROW = 3;
 	const int START_Y = 150;
 	const int ROW_SPACING = 250;
@@ -53,30 +64,36 @@ void showBeersInfo(std::array<std::pair<Texture2D, std::string>, 6>beers, bool s
 	for (int i = 0; i < beers.size(); i++) {
 		int row = i / BEERS_PER_ROW;
 		int col = i % BEERS_PER_ROW;
+		Texture2D currentTexture = beerTextures[beers[i].getName()];
 
-		int x = BEER_SPACING * (col + 1) - beers[i].first.width / 2;
+		// Pozycje rysowania
+		int x = BEER_SPACING * (col + 1) - currentTexture.width / 2;
 		int y = START_Y + row * ROW_SPACING;
 
-		bool clicked = TextureButton(beers[i].first, { (float)x, (float)y }, WHITE);
+		bool clicked = TextureButton(currentTexture, { (float)x, (float)y }, WHITE);
 
-		std::string beerName = beers[i].second + " x" + std::to_string(inventory.countBeer(beers[i].second));
+		// Rysowanie nazwy i ilosci
+		std::string beerName = beers[i].getName() + " x" + std::to_string(inventory.countBeer(beers[i].getName()));
 		int nameWidth = MeasureText(beerName.c_str(), 18);
 		int nameX = BEER_SPACING * (col + 1) - nameWidth / 2;
-		int nameY = y + beers[i].first.height + 5;
+		int nameY = y + currentTexture.height + 5;
 		DrawText(beerName.c_str(), nameX, nameY, 18, WHITE);
 
+		// Rysowanie ceny
         if (showPrice) {
-		    std::string priceText = "Cena: " + std::to_string(BEER_PRICE) + "zl";
+            int currentPrice = beers[i].getPrice();
+
+		    std::string priceText = "Cena: " + std::to_string(currentPrice) + "zl";
 		    int priceWidth = MeasureText(priceText.c_str(), 16);
 		    int priceX = BEER_SPACING * (col + 1) - priceWidth / 2;
 		    int priceY = nameY + 25;
 
-		    DrawText(priceText.c_str(), (float)priceX, (float)priceY, 16, WHITE);
+		    DrawText(priceText.c_str(), priceX, priceY, 16, WHITE);
 
 		    if (clicked) {
-			    if (inventory.getWallet() >= BEER_PRICE) {
-				    inventory.addBeer(beers[i].second);
-				    inventory.removeMoney(BEER_PRICE);
+			    if (inventory.getWallet() >= currentPrice) {
+				    inventory.addBeer(beers[i].getName());
+				    inventory.removeMoney(currentPrice);
 			    }
 		    }
         }

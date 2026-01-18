@@ -1,28 +1,16 @@
 #include "inventory.h"
-#include "inventory_manager.h"
-#include "utils.h"
-#include "town_map.h"
 
 static const char* INV_NAME = "Ekwipunek";
 static const char* INV_INSTRUCTION = "Nacisnij SPACJE, aby wyjsc";
 
 void Inventory::load() {
 	inventoryBackground = LoadTexture("assets/inventorytlo.png");
-	beers = { {
-		{LoadTexture("assets/carlsberg.png"),		"Carlsberg"},
-		{LoadTexture("assets/cel.png"),				"Zubr"},
-		{LoadTexture("assets/zywiec.png"),			"Zywiec"},
-		{LoadTexture("assets/zywiec_ciemne.png"),	"Zywiec ciemne"},
-		{LoadTexture("assets/tyskie.png"),			"Tyskie"},
-		{LoadTexture("assets/perla_export.png"),	"Perla export"}
-	} };
+	beerTextures = loadBeerTextures();
 }
 
 void Inventory::unload() {
 	UnloadTexture(inventoryBackground);
-	for (const auto& beer : beers) {
-		UnloadTexture(beer.first);
-	}
+	unloadBeerTextures(beerTextures);
 }
 
 void Inventory::loop() {
@@ -41,7 +29,7 @@ void Inventory::loop() {
 	DrawText(INV_INSTRUCTION, GetScreenWidth() - MeasureText(INV_INSTRUCTION, 20) - 2, GetScreenHeight() - 22, 20, WHITE);
 	DrawText(wallet.c_str(), GetCenteredX(wallet.c_str(), 20), 90, 20, WHITE);
 
-	showBeersInfo(beers, false);
+	showBeersInfo(beerTextures, false);
 
 	EndDrawing();
 }

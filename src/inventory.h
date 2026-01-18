@@ -3,6 +3,9 @@
 #include <string>
 #include <raylib.h>
 #include "level.h"
+#include "inventory_manager.h"
+#include "utils.h"
+#include "town_map.h"
 
 class Inventory : public Level {
 	public:
@@ -12,7 +15,5 @@ class Inventory : public Level {
 
 private:
 	Texture2D inventoryBackground;
-	//TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie, cena i perki
-	// polaczone z InventoryManager i Shop
-	std::array<std::pair<Texture2D, std::string>, 6> beers;
+	std::unordered_map<std::string, Texture2D> beerTextures;
 };

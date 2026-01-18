@@ -1,5 +1,5 @@
 #pragma once
-#include <array>
+#include <unordered_map>
 #include <raylib.h>
 #include "level.h"
 
@@ -11,7 +11,5 @@ class Shop : public Level {
 
 	private:
 		Texture2D shopInterior;
-		//TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie, cena i perki
-		// polaczone z InventoryManager
-		std::array<std::pair<Texture2D, std::string>, 6> beers;
+		std::unordered_map<std::string, Texture2D> beerTextures;
 };
