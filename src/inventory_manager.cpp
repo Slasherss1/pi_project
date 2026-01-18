@@ -1,6 +1,6 @@
 #include "inventory_manager.h"
 #include <sstream>
-#include <cstring>
+#include <algorithm>
 
 void InventoryManager::setDifficulty(GameDifficulty diff) {
 	difficulty = diff;
