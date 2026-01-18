@@ -78,7 +78,6 @@ void Shop::showBeersWithInfo() {
 		int nameY = y + beers[i].first.height + 5;
 		DrawText(beerName.c_str(), nameX, nameY, 18, WHITE);
 		
-		// Rysuj cene na samym dole uzywajac TextButton (zeby tez byla klikalna)
 		std::string priceText = "Cena: " + std::to_string(BEER_PRICE) + "zl";
 		int priceWidth = MeasureText(priceText.c_str(), 16);
 		int priceX = BEER_SPACING * (col + 1) - priceWidth / 2;
@@ -86,7 +85,6 @@ void Shop::showBeersWithInfo() {
 		
 		DrawText(priceText.c_str(), (float)priceX, (float)priceY, 16, WHITE);
 		
-		// Zakup piwa jesli kliknieto na teksture
 		if (clicked) {
 			if (inventory.getWallet() >= BEER_PRICE) {
 				inventory.addBeer(beers[i].second);
