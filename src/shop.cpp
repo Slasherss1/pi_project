@@ -10,7 +10,7 @@ static const char* WALLET_STATUS = "Portfel: ";
 
 void Shop::load() {
 	// na potrzeby testow
-	InventoryManager::getInstance().addMoney(5);
+	//InventoryManager::getInstance().addMoney(5);
 	shopInterior = LoadTexture("assets/studenciak.png");
 	beers = { {
 		{LoadTexture("assets/carlsberg.png"),		"Carlsberg"},
