@@ -5,8 +5,8 @@
 
 enum GameDifficulty { EASY, HARD };
 // nazwa pliku do zapisu stanu gry w tym miejscu,
-// poniewaz jest uzywana w kilku miejscach.
-// jest na wierzchu, aby latwiej bylo zmienic w przyszlosci
+// poniewaz jest uzywana w wielu plikach.
+// jest na wierzchu, a nie w funkcji samej w sobie, aby latwiej bylo zmienic w przyszlosci
 static const char* SAVE_FILE = "save.dat";
 
 // klasa typu singleton
@@ -21,9 +21,10 @@ public:
     void operator=(const InventoryManager&) = delete;
 
 
-    // TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie i perki
+    // TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie, cena i perki
     void addBeer(const std::string& beer);
 	bool removeBeer(const std::string& beer);
+	int countBeer(const std::string& beer) const;
 
 	void addMoney(int amount);
 	void removeMoney(int amount);

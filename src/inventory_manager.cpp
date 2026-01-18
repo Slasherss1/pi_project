@@ -19,6 +19,10 @@ bool InventoryManager::removeBeer(const std::string& beer) {
 	return false;
 }
 
+int InventoryManager::countBeer(const std::string& beer) const {
+	return std::count(beers.begin(), beers.end(), beer);
+}
+
 void InventoryManager::addMoney(int amount) {
 	wallet += amount;
 }
