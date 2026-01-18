@@ -54,13 +54,13 @@ void unloadBeerTextures(std::unordered_map<std::string, Texture2D>& beerTextures
 
 void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showMore) {
 InventoryManager& inventory = InventoryManager::getInstance();
-const std::vector<Beer>& beers = BeerRegistry::getInstance().getAllBeers();
+    const std::vector<Beer>& beers = BeerRegistry::getInstance().getAllBeers();
 
-// Dane do rownego rysowania
-const int BEERS_PER_ROW = 3;
-const int START_Y = 150;
-const int ROW_SPACING = 250;
-const int BEER_SPACING = 800 / (BEERS_PER_ROW + 1);
+    // Dane do rownego rysowania
+    const int BEERS_PER_ROW = 3;
+    const int START_Y = 150;
+    const int ROW_SPACING = 250;
+    const int BEER_SPACING = 800 / (BEERS_PER_ROW + 1);
 
 	for (int i = 0; i < beers.size(); i++) {
 		int row = i / BEERS_PER_ROW;
