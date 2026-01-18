@@ -14,6 +14,4 @@ class Shop : public Level {
 		//TODO: zaimplementowac klase "piwo" zawierajaca nazwe, zdjecie, cena i perki
 		// polaczone z InventoryManager
 		std::array<std::pair<Texture2D, std::string>, 6> beers;
-
-		void showBeersWithInfo();
 };

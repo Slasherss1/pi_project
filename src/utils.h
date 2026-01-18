@@ -7,5 +7,5 @@ bool TextureButton(Texture2D texture, Vector2 position, Color tint);
 float GetCenteredX(const char* text, int fontSize);
 float GetCenteredXInBounds(const char* text, int fontSize, float left, float right);
 void DrawBackground(Texture2D menuTexture);
-
+void showBeersInfo(std::array<std::pair<Texture2D, std::string>, 6> beers, bool showPrice);
 std::string GetKeycodePrintableName(KeyboardKey key);
