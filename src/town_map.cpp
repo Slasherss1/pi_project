@@ -61,7 +61,7 @@ void TownMap::loop() {
 
     EndMode2D();
 	
-	// Przycisk ekwipunku w prawym dolnym rogu (poza Mode2D - czesc UI)
+	// Przycisk ekwipunku w prawym dolnym rogu
 	int buttonFontSize = 30;
 	int margin = 10;
 	int buttonX = GetScreenWidth() - MeasureText(INVENTORY_BUTTON, buttonFontSize) - margin;
