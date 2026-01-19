@@ -81,7 +81,6 @@ void TownMap::loop() {
     DrawTexturePro(currentPlayerTexture, source, dest, origin, playerRotation, WHITE);
     
     EndMode2D();
-    DrawText(TextFormat("%f,%f", playerPosition.x, playerPosition.y), 20, 20, 20, WHITE);
 	
 	// Przycisk ekwipunku w prawym dolnym rogu
 	int buttonFontSize = 30;

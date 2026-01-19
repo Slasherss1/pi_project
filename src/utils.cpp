@@ -1,4 +1,7 @@
 #include "utils.h"
+#include "beer.h"
+#include "inventory_manager.h"
+#include "beer_registry.h"
 
 bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover) {
     Vector2 size = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
@@ -53,7 +56,7 @@ void unloadBeerTextures(std::unordered_map<std::string, Texture2D>& beerTextures
 }
 
 void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showMore) {
-InventoryManager& inventory = InventoryManager::getInstance();
+    InventoryManager& inventory = InventoryManager::getInstance();
     const std::vector<Beer>& beers = BeerRegistry::getInstance().getAllBeers();
 
     // Dane do rownego rysowania
