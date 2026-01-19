@@ -1,4 +1,9 @@
 #include "projectile.h"
+#include "beer_effect.h"
+#include "beer_registry.h"
+#include "inventory_manager.h"
+#include "utils.h"
+#include <algorithm>
 #include <cmath>
 #include <raylib.h>
 #include <raymath.h>
@@ -15,14 +20,19 @@ void Projectile::Draw() {
 float ForceMeterTick() {
     static float force = 0.0;
     static bool increasing = true;
+    float effect_multiplier = 1.0;
+    const BeerEffect* forceEffect = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), SLOWER_SPEED_ADJUSTMENT);
+    if (forceEffect) {
+        effect_multiplier = forceEffect->value;
+    }
     if (increasing) {
-        force += GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
+        force += GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER * effect_multiplier; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
         if (force >= 128.0) {
             force = 128.0;
             increasing = false;
         }
     } else {
-        force -= GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
+        force -= GetFrameTime() * pow(10, POWER) * XP_FORCE_MULTIPLIER * effect_multiplier; // TODO: Zamienić XP_FORCE_MULTIPLIER na zmienną z poziomu trudności (#8)
         if (force <= 0.0) {
             force = 0.0;
             increasing = true;
@@ -35,9 +45,15 @@ void AimableProjectile::Draw() {
     if (isShot) return;
     if (isAiming) {
         const float angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {-1.0, 0.0});
-        // TODO: Dodać wskaźnik tylko przy efekcie (#10)
-        #ifndef NDEBUG
+        #ifdef NDEBUG
+        const BeerEffect* crosshairEffect = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), CROSSHAIR);
+        if (
+            crosshairEffect
+        ) {
+        #endif
         DrawLineV(this->position, Vector2Add(Vector2Rotate({10000,0}, -angle), this->position), BLACK);
+        #ifdef NDEBUG
+        }
         #endif
         DrawRing(this->position, 32, 64, -angle*RAD2DEG+5, -angle*RAD2DEG-5, 5, BLACK);
         DrawRectangleGradientV(GetRenderWidth() - 48, GetRenderHeight() - force, 48, force, RED, GREEN);

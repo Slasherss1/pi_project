@@ -1,3 +1,4 @@
+#include "drinkMeter.h"
 #include "physObj.h"
 #pragma once
 
@@ -16,6 +17,8 @@ class AimableProjectile {
         Vector2 position = {0.0f, 0.0f};
 
         Projectile** proj_pp = nullptr;
+
+        DrinkMeter * drinkMeter = nullptr;
 
         void Draw();
         void Tick();

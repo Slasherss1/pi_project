@@ -19,7 +19,7 @@ BeerRegistry::BeerRegistry() {
 			BeerEffect(EffectType::ACCURACY_BOOST, EffectTrigger::CONTINUOUS, 1.50)
 		}),
 		Beer("Perla export", "assets/perla_export.png", 10, 2, {
-			BeerEffect(EffectType::SLOWER_SPEED_ADJUSTMENT, EffectTrigger::ON_START, 0.9)
+			BeerEffect(EffectType::SLOWER_SPEED_ADJUSTMENT, EffectTrigger::ON_START, 0.6)
 		}),
 	};
 }
