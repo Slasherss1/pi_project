@@ -81,7 +81,12 @@ void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, boo
 		int nameWidth = MeasureText(beerName.c_str(), 18);
 		int nameX = BEER_SPACING * (col + 1) - nameWidth / 2;
 		int nameY = y + currentTexture.height + 5;
-		DrawText(beerName.c_str(), nameX, nameY, 18, WHITE);
+		
+		// Sprawdz czy piwo jest wybrane
+		bool isSelected = (inventory.getChosenBeer() == beers[i].getName());
+		Color nameColor = isSelected ? YELLOW : WHITE;
+		
+		DrawText(beerName.c_str(), nameX, nameY, 18, nameColor);
 
         if (showMore) {
 			// Rysowanie ceny
@@ -112,8 +117,15 @@ void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, boo
 			    if (inventory.getWallet() >= currentPrice) {
 				    inventory.addBeer(beers[i].getName());
 				    inventory.removeMoney(currentPrice);
-			    }
 		    }
+		    }
+        }
+        else {
+            if (clicked) {
+                if (inventory.countBeer(beers[i].getName()) > 0) {
+                    inventory.setChosenBeer(beers[i].getName());
+                }
+            }
         }
 	}
 }

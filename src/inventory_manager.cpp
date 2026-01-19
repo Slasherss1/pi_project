@@ -39,6 +39,14 @@ std::vector<std::string> InventoryManager::getBeers() const {
 	return beers;
 }
 
+void InventoryManager::setChosenBeer(const std::string& beer) {
+	chosenBeer = beer;
+}
+
+std::string InventoryManager::getChosenBeer() const {
+	return chosenBeer;
+}
+
 GameDifficulty InventoryManager::getDifficulty() const {
 	return difficulty;
 }
