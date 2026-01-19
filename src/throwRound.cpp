@@ -37,6 +37,11 @@ void ThrowRound::unload() {
 }
 
 void ThrowRound::loop() {
+    if (IsKeyReleased(KEY_ESCAPE)) {
+		LevelManager::changeLevel(new TownMap());
+		return;
+	}
+
     if (proj != nullptr) {
         proj->Tick();
         col.handleCollision(&target, proj);

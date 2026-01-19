@@ -41,7 +41,7 @@ void TownMap::unload() {
 void TownMap::loop() {
     determinePlayerMovement(GetFrameTime());
 
-	if (IsKeyDown(KEY_ESCAPE)) {
+	if (IsKeyPressed(KEY_ESCAPE)) {
 		LevelManager::changeLevel(new MainMenu());
 		return;
 	}

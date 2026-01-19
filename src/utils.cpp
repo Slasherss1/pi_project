@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "beer.h"
+#include "beer_effect.h"
 #include "inventory_manager.h"
 #include "beer_registry.h"
 
@@ -146,4 +147,16 @@ std::string GetKeycodePrintableName(KeyboardKey key) {
             }
             return "UNKNOWN KEY";
     }
+}
+
+const BeerEffect* beerByNameHasEffect(const std::string& beerName, EffectType effectType) {
+    const Beer* beer = BeerRegistry::getInstance().getBeerByName(beerName);
+    if (beer) {
+        for (const auto& effect : beer->getEffects()) {
+            if (effect.type == effectType) {
+                return &effect;
+            }
+        }
+    }
+    return nullptr;
 }

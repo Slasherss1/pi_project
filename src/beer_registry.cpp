@@ -15,11 +15,11 @@ BeerRegistry::BeerRegistry() {
 			BeerEffect(EffectType::CROSSHAIR, EffectTrigger::AT_50_PERCENT, 0)
 		}),
 		Beer("Zywiec ciemne", "assets/zywiec_ciemne.png", 10, 5, {
-			BeerEffect(EffectType::SLOWER_DRINK, EffectTrigger::CONTINUOUS, 0.75),
+			BeerEffect(EffectType::SLOWER_DRINK, EffectTrigger::CONTINUOUS, 0.5),
 			BeerEffect(EffectType::ACCURACY_BOOST, EffectTrigger::CONTINUOUS, 1.50)
 		}),
 		Beer("Perla export", "assets/perla_export.png", 10, 2, {
-			BeerEffect(EffectType::SLOWER_SPEED_ADJUSTMENT, EffectTrigger::ON_START, 0.9)
+			BeerEffect(EffectType::SLOWER_SPEED_ADJUSTMENT, EffectTrigger::ON_START, 0.6)
 		}),
 	};
 }
