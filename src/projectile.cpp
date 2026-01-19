@@ -44,7 +44,13 @@ float ForceMeterTick() {
 void AimableProjectile::Draw() {
     if (isShot) return;
     if (isAiming) {
-        const float angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {-1.0, 0.0});
+        float angle;
+        const BeerEffect* invertedAimEffect = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), INVERTED_AIM);
+        if (invertedAimEffect) {
+            angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {1.0, 0.0});
+        } else {
+            angle = Vector2Angle(Vector2Subtract(GetMousePosition(), this->position), {-1.0, 0.0});
+        }
         #ifdef NDEBUG
         const BeerEffect* crosshairEffect = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), CROSSHAIR);
         if (
@@ -68,7 +74,12 @@ void AimableProjectile::Tick() {
         force = ForceMeterTick();
     } else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
         isAiming = false;
-        this->Shoot(Vector2Subtract(GetMousePosition(), this->position));
+        const BeerEffect* invertedAimEffect = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), INVERTED_AIM);
+        if (invertedAimEffect) {
+            this->Shoot(Vector2Negate(Vector2Subtract(GetMousePosition(), this->position)));
+        } else {
+            this->Shoot(Vector2Subtract(GetMousePosition(), this->position));
+        }
     }
 }
 
