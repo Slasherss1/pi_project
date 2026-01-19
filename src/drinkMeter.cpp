@@ -1,11 +1,23 @@
 #include "drinkMeter.h"
+#include "beer_effect.h"
+#include "inventory_manager.h"
+#include "utils.h"
 #include <raylib.h>
 
 #define DRINK_METER_WIDTH 64.0f
 #define DRINK_METER_HEIGHT 256.0f
 
 void DrinkMeter::sip() {
-    currentLevel -= sipSize;
+    float sipMultiplier = 1.0f;
+    const BeerEffect* faster = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), FASTER_DRINK);
+    if (faster) {
+        sipMultiplier *= faster->value;
+    }
+    const BeerEffect* slower = beerByNameHasEffect(InventoryManager::getInstance().getChosenBeer(), SLOWER_DRINK);
+    if (slower) {
+        sipMultiplier *= slower->value;
+    }
+    currentLevel -= sipSize * sipMultiplier;
     if (currentLevel < 0.0f) {
         currentLevel = 0.0f;
     }
