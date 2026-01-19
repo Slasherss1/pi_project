@@ -91,7 +91,7 @@ InventoryManager& inventory = InventoryManager::getInstance();
 
 		    DrawText(priceText.c_str(), priceX, priceY, 16, WHITE);
 
-			// Wyswietlanie efektów
+			// Wyswietlanie efektow
 			const auto& effects = beers[i].getEffects();
 			int effectY = priceY + 20;
 			int effectFontSize = 12;
