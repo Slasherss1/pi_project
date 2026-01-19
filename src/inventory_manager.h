@@ -30,7 +30,7 @@ public:
 	int getWallet() const;
     std::vector<std::string> getBeers() const;
 
-    GameDifficulty getDifficulty() const;
+    float getDifficulty() const;
 	void setDifficulty(GameDifficulty diff);
 
 	bool saveInventory(const std::string& filename) const;

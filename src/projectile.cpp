@@ -15,7 +15,7 @@ void Projectile::Draw() {
 #define POWER 2
 #define map_exp(from, to, power, value) (to * (pow(value/from, power)))
 
-#define XP_FORCE_MULTIPLIER 0.5  // TODO: Zmieniać na podstawie poziomu trudności (#8)
+#define XP_FORCE_MULTIPLIER InventoryManager::getInstance().getDifficulty()
 
 float ForceMeterTick() {
     static float force = 0.0;

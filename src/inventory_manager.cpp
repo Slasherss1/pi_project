@@ -47,8 +47,15 @@ std::string InventoryManager::getChosenBeer() const {
 	return chosenBeer;
 }
 
-GameDifficulty InventoryManager::getDifficulty() const {
-	return difficulty;
+float InventoryManager::getDifficulty() const {
+	switch (difficulty) {
+		case EASY:
+			return 1.0f;
+		case HARD:
+			return 1.5f;
+		default:
+			return 1.0f;
+	}
 }
 
 bool InventoryManager::saveInventory(const std::string& filename) const {
