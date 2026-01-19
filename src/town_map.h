@@ -11,12 +11,14 @@ public:
 private:
     Texture2D map;
     Texture2D currentPlayerTexture;
+    Texture2D redMan;
     Rectangle playerBox;
     Vector2 playerPosition;
     float playerRotation;
     float playerSpeed;
     Camera2D camera;
     Rectangle shopEntry;
+    Rectangle roundEntry;
 
     void determinePlayerMovement(float deltaTime);
     void updatePlayerHitBox();

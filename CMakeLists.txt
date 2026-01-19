@@ -70,6 +70,8 @@ target_sources(main
         "src/beer_effect.cpp"
         "src/beer_registry.h"
         "src/beer_registry.cpp"
+        "src/character.h"
+        "src/character.cpp"
 )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

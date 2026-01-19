@@ -1,4 +1,7 @@
 ﻿#include <cmath>
+#include <raylib.h>
+#include "level.h"
+#include "throwRound.h"
 #include "utils.h"
 #include "town_map.h"
 #include "shop.h"
@@ -11,6 +14,7 @@ static const char* INVENTORY_BUTTON = "Ekwipunek";
 
 void TownMap::load() {
     map = LoadTexture("assets/mapa.png");
+    redMan = LoadTexture("assets/miniczer1.png");
 
     currentPlayerTexture = LoadTexture("assets/miniziel1.png");
     playerPosition = { (float)map.width / 2, (float)map.height / 2 };
@@ -23,10 +27,12 @@ void TownMap::load() {
     camera.zoom = 1.0f;
     
     shopEntry = { 10, float(map.height - 50), 440, 50 };
+    roundEntry = {1137, 420, 32, 32};
 }
 
 void TownMap::unload() {
     UnloadTexture(map);
+    UnloadTexture(redMan);
     UnloadTexture(currentPlayerTexture);
 
 	InventoryManager::getInstance().saveInventory(SAVE_FILE);
@@ -51,14 +57,29 @@ void TownMap::loop() {
 		return;
     }
 
+    if (CheckCollisionRecs(playerBox, roundEntry)) {
+        LevelManager::changeLevel(new ThrowRound());
+        return;
+    }
+
+    // czerwony
+    DrawTexturePro(redMan,
+        { 0.0f, .0f, (float)redMan.width, (float)redMan.height },
+        roundEntry,
+        { 16.0f, 16.0f },
+        0.0f,
+        WHITE
+    );
+
+    
     // Zastosowane w celu mozliwosci ustawienia origin w srodku tekstury,
     // dzieki czemu obraca sie wzgledem srodka
     Rectangle source = { 0.0f, 0.0f, (float)currentPlayerTexture.width, (float)currentPlayerTexture.height };
     Rectangle dest = { playerPosition.x, playerPosition.y, (float)currentPlayerTexture.width, (float)currentPlayerTexture.height };
     Vector2 origin = { (float)currentPlayerTexture.width / 2, (float)currentPlayerTexture.height / 2 };
-
+    
     DrawTexturePro(currentPlayerTexture, source, dest, origin, playerRotation, WHITE);
-
+    
     EndMode2D();
 	
 	// Przycisk ekwipunku w prawym dolnym rogu

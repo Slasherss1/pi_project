@@ -1,4 +1,7 @@
 #include "inventory.h"
+#include "inventory_manager.h"
+#include "town_map.h"
+#include "utils.h"
 
 static const char* INV_NAME = "Ekwipunek";
 static const char* INV_INSTRUCTION = "Nacisnij SPACJE, aby wyjsc";

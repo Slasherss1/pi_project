@@ -2,9 +2,6 @@
 #include <raylib.h>
 #include <string>
 #include <unordered_map>
-#include "inventory_manager.h"
-#include "beer_registry.h"
-#include "beer_effect.h"
 
 bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover);
 bool TextureButton(Texture2D texture, Vector2 position, Color tint);

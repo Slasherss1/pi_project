@@ -1,11 +1,8 @@
 #pragma once
-#include <array>
 #include <string>
 #include <raylib.h>
 #include "level.h"
-#include "inventory_manager.h"
-#include "utils.h"
-#include "town_map.h"
+#include <unordered_map>
 
 class Inventory : public Level {
 	public:
