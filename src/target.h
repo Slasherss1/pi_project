@@ -11,4 +11,6 @@ class Target : public PhysicsObj {
         Target(Vector2);
         SafeZone safeZone;
         void Draw() override;
+
+        bool isHit();
 };

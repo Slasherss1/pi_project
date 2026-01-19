@@ -6,7 +6,7 @@ class Character {
         Vector2 position;
         float initAngle;
         
-        public:
+    public:
         Character(Vector2 initPos, float initAngle);
         Vector2 targetPos;
         Vector2 initPos;
