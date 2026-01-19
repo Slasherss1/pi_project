@@ -12,13 +12,14 @@
 class ThrowRound : public Level {
     private:
         Texture2D bg;
-        Target target{{400.0, 200.0}};
+        Target target{{400.0, 300.0}};
         AimableProjectile ap;
         Projectile* proj = nullptr;
         CollideAndBounce col;
         Character character{{400.0, 550.0}, 180.0f};
         Masher * drinkMash = nullptr;
         DrinkMeter drinkMeter;
+        Texture2D redMan;
     public:
         void load() override;
         void unload() override;

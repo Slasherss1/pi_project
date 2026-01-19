@@ -23,7 +23,7 @@ void Character::Draw() {
     } else {
         angle = atan2f(targetPos.y - position.y, targetPos.x - position.x) * (180.0f / PI) - 90.0f;
     }
-    DrawTexturePro(texture, {0, 0, 32, 32}, {position.x, position.y, 32, 32}, {16,16}, angle, WHITE);
+    DrawTexturePro(texture, {0, 0, 128, 128}, {position.x, position.y, 128, 128}, {64,64}, angle, WHITE);
 }
 
 bool Character::hasReachedTarget() {

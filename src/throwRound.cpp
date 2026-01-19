@@ -1,6 +1,9 @@
 #include "throwRound.h"
 #include "drinkMeter.h"
+#include "inventory_manager.h"
+#include "level.h"
 #include "masher.h"
+#include "town_map.h"
 #include "utils.h"
 #include <raylib.h>
 #include <string>
@@ -20,7 +23,9 @@ void ThrowRound::load() {
     ap.texture = LoadTexture("assets/zgniot.png");
     ap.proj_pp = &proj;
     
-    character.texture = LoadTexture("assets/miniziel1.png");
+    character.texture = LoadTexture("assets/duzyziel1.png");
+
+    redMan = LoadTexture("assets/duzyczer1.png");
 }
 
 void ThrowRound::unload() {
@@ -45,7 +50,6 @@ void ThrowRound::loop() {
             drinkMash = new Masher();
             drinkMash->text = "Pij!";
         }
-    } else {
     }
     
     if (drinkMash) {
@@ -58,6 +62,9 @@ void ThrowRound::loop() {
         if (drinkMeter.currentLevel < 1e-9) {
             delete drinkMash;
             drinkMash = nullptr;
+            InventoryManager::getInstance().addMoney(1);
+            LevelManager::changeLevel(new TownMap());
+            return;
         }
     }
 
@@ -67,6 +74,7 @@ void ThrowRound::loop() {
     if (proj != nullptr) {
         proj->Draw();
     }
+    DrawTexture(redMan, 400-64, 10, WHITE);
     character.Draw();
     ap.Draw();
     drinkMeter.draw();
