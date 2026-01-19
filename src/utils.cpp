@@ -1,5 +1,4 @@
 #include "utils.h"
-#include <raylib.h>
 
 bool TextButton(const char* text, Vector2 pos, int fontSize, Color normal, Color hover) {
     Vector2 size = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
@@ -36,6 +35,84 @@ void DrawBackground(Texture2D texture) {
         0.0f,
         WHITE
     );
+}
+
+std::unordered_map<std::string, Texture2D> loadBeerTextures() {
+    std::unordered_map<std::string, Texture2D> beerTextures;
+    for (const auto& beer : BeerRegistry::getInstance().getAllBeers()) {
+        beerTextures[beer.getName()] = LoadTexture(beer.getImageName().c_str());
+    }
+    return beerTextures;
+}
+
+void unloadBeerTextures(std::unordered_map<std::string, Texture2D>& beerTextures) {
+    for (auto& [beerName, beerTexture] : beerTextures) {
+        UnloadTexture(beerTexture);
+    }
+    beerTextures.clear();
+}
+
+void showBeersInfo(std::unordered_map<std::string, Texture2D> &beerTextures, bool showMore) {
+InventoryManager& inventory = InventoryManager::getInstance();
+    const std::vector<Beer>& beers = BeerRegistry::getInstance().getAllBeers();
+
+    // Dane do rownego rysowania
+    const int BEERS_PER_ROW = 3;
+    const int START_Y = 150;
+    const int ROW_SPACING = 250;
+    const int BEER_SPACING = 800 / (BEERS_PER_ROW + 1);
+
+	for (int i = 0; i < beers.size(); i++) {
+		int row = i / BEERS_PER_ROW;
+		int col = i % BEERS_PER_ROW;
+		Texture2D currentTexture = beerTextures[beers[i].getName()];
+
+		// Pozycje rysowania
+		int x = BEER_SPACING * (col + 1) - currentTexture.width / 2;
+		int y = START_Y + row * ROW_SPACING;
+
+		bool clicked = TextureButton(currentTexture, { (float)x, (float)y }, WHITE);
+
+		// Rysowanie nazwy i ilosci
+		std::string beerName = beers[i].getName() + " x" + std::to_string(inventory.countBeer(beers[i].getName()));
+		int nameWidth = MeasureText(beerName.c_str(), 18);
+		int nameX = BEER_SPACING * (col + 1) - nameWidth / 2;
+		int nameY = y + currentTexture.height + 5;
+		DrawText(beerName.c_str(), nameX, nameY, 18, WHITE);
+
+        if (showMore) {
+			// Rysowanie ceny
+            int currentPrice = beers[i].getPrice();
+
+		    std::string priceText = "Cena: " + std::to_string(currentPrice) + "zl";
+		    int priceWidth = MeasureText(priceText.c_str(), 16);
+		    int priceX = BEER_SPACING * (col + 1) - priceWidth / 2;
+		    int priceY = nameY + 25;
+
+		    DrawText(priceText.c_str(), priceX, priceY, 16, WHITE);
+
+			// Wyswietlanie efektow
+			const auto& effects = beers[i].getEffects();
+			int effectY = priceY + 20;
+			int effectFontSize = 12;
+			
+			for (const auto& effect : effects) {
+                std::string effectText = GetEffectDescription(effect);
+				int effectWidth = MeasureText(effectText.c_str(), effectFontSize);
+				int effectX = BEER_SPACING * (col + 1) - effectWidth / 2;
+				
+				DrawText(effectText.c_str(), effectX, effectY, effectFontSize, YELLOW);
+				effectY += effectFontSize + 3;
+			}
+
+		    if (clicked) {
+			    if (inventory.getWallet() >= currentPrice) {
+				    inventory.addBeer(beers[i].getName());
+				    inventory.removeMoney(currentPrice);
+			    }
+		    }
+        }
+	}
 }
 
 std::string GetKeycodePrintableName(KeyboardKey key) {
