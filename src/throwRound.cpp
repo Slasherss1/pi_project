@@ -67,7 +67,9 @@ void ThrowRound::loop() {
         if (drinkMeter.currentLevel < 1e-9) {
             delete drinkMash;
             drinkMash = nullptr;
-            InventoryManager::getInstance().addMoney(1);
+            InventoryManager& im = InventoryManager::getInstance();
+            im.addMoney(1);
+            im.removeBeer(im.getChosenBeer());
             LevelManager::changeLevel(new TownMap());
             return;
         }
